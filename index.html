@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+
+    <title>Adaptive Skill Coordination</title>
+
+    <!--Favicon-->
+    <link rel="icon" type="../image/png" href="../img/favicon.png">
+    <!--CSS Links-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Heebo:light">
+    <style>
+      .videoWrapper {
+        position: relative;
+        padding-bottom: 56.25%; /* 16:9 */
+        padding-top: 25px;
+        height: 0;
+      }
+      .videoWrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+    </style>
+    <!--Scripts-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-1"></div>
+
+        <div class="col-md-10">
+
+          <br><br>
+
+          <div class="page-header">
+            <div style="text-align: center;">
+              <h1>Adaptive Skill Coordination <br> for Robotic Mobile Manipulation</h1>
+            </div>
+          </div>
+
+
+          <hr>
+
+
+          <!-- <div class="row"> -->
+          <div style="text-align: center;">
+            <a class="btn btn-primary white_descrip" href="https://arxiv.org/abs/2304.00410" role="button">
+            <i class="ai ai-arxiv fa-1x" style="color:white;"></i>
+            arXiv</a>
+          </div>
+          <!-- </div> -->
+
+
+<!--          <div style="text-align: center;">-->
+<!--            <br>-->
+<!--            <h2>Main Video</h2>-->
+<!--            <br>-->
+<!--            <div class="videoWrapper">-->
+<!--              <iframe width="" height="1135"-->
+<!--                src="https://www.youtube.com/embed/q2sl4nL6vpg" title="Adaptive Skill Coordination for Robotic Mobile Manipulation" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>-->
+<!--              </iframe>-->
+<!--            </div>-->
+<!--          </div>-->
+
+
+          <br><hr><br>
+
+
+          <div style="text-align: center;">
+            <h2>Real-World Deployment in Apartment</h2>
+            <br>
+            <video playsinline autoplay muted loop controls style="width: 100%">
+              <source src="media/neuron1.mp4" type="video/webm"></source>
+            </video>
+            <h4><i>30x speed</i></h4>
+          </div>
+
+
+          <br><hr><br>
+
+
+          <div style="text-align: center;">
+            <h2>Abstract</h2>
+          </div>
+          <br>
+          <p style="font-size: 20px; text-indent: 50px">
+            Legged robots, locomoting through ‘limbs’, are well-suited for deployment in unstructured environments. Limbs allow a large range of robot morphologies, with various strengths, but each requiring a unique control scheme. As controllers optimized in simulation do not transfer well to the real world (the infamous sim-to-real gap), methods enabling quick learning in the real world, without any assumptions on the specific robot model and its dynamics, are necessary. In this paper, we present a generic method based on Central Pattern Generators (CPGs), that enables the acquisition of multiple basic locomotion skills in parallel, through very few trials. The novelty of our approach, underpinned by a mathematical analysis of the CPG model, is to search for good initial states, instead of optimizing connection weights. Empirical validation on six different robot morphologies demonstrates that our method enables robots to learn primary locomotion skills within fifteen minutes in the real world.
+          </p>
+
+          <br>
+          <div style="text-align: center;">
+            <h2>Space state</h2>
+            <br>
+            <img src="media/state-space.mp4" width="100%">
+          </div>
+          <br>
+          <p style="font-size: 20px; text-indent: 50px">
+            State space
+          </p>
+
+
+
+
+          <br>
+          <div style="text-align: center;">
+            <h2>Neuron2</h2>
+            <br>
+            <img src="media/neuron2.mp4" width="100%">
+          </div>
+          <br>
+          <p style="font-size: 20px; text-indent: 50px">
+            Some text about this
+          </p>
+
+
+          <br><hr><br>
+
+
+<!--          <div style="text-align: center;">-->
+<!--            <h2>Robustness to Perturbations</h2>-->
+<!--            <br>-->
+<!--            <div class="videoWrapper">-->
+<!--              <iframe width="2560" height="1135"-->
+<!--                src="https://www.youtube.com/embed/GTdtq7nhXZ0" title="ASC: Robustness to Perturbations" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>-->
+<!--              </iframe>-->
+<!--            </div>-->
+<!--          </div>-->
+
+
+<!--          <br><hr><br>-->
+
+
+<!--          <div style="text-align: center;">-->
+<!--            <h2>Learned skills vs. Boston Dynamics API</h2>-->
+<!--            <br>-->
+<!--            <div class="videoWrapper">-->
+<!--              <iframe width="2560" height="1135"-->
+<!--                src="https://www.youtube.com/embed/-8E4WhdneS8" title="ASC: Learned skills vs. Boston Dynamics API" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>-->
+<!--              </iframe>-->
+<!--            </div>-->
+<!--          </div>-->
+
+
+          <br><hr><br><br><br><br>
+
+
+
+          <div class="col-md-1"></div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
+    </div>
+  </body>
+</html>
