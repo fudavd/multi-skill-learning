@@ -26,14 +26,31 @@
         height: 100%;
       }
 
+      .pageOverview {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 15%;
+        background-color: #f2f2f2;
+        padding: 20px;
+        height: 100vh;
+        overflow-y: auto;
+      }
+
     </style>
     <!--Scripts-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
   </head>
 
   <body>
-
-    <div class="container">
+    <div class="pageOverview">
+        <ul style="list-style-type: none; padding: 5px;overflow-y: auto;">
+          <li><a href="#Abstract">Abstract</a></li>
+          <li><a href="#section2">Introduction</a></li>
+          <li><a href="#section3">Methodology</a></li>
+        </ul>
+    </div>
+    <div class="container" style="margin-left: 20%; padding: 20px; align-content: center;overflow-y: auto;">
       <div class="row">
 
         <div class="col-md-1"></div>
@@ -44,7 +61,7 @@
 
           <div class="page-header">
             <div style="text-align: center;">
-              <h1>Adaptive Skill Coordination <br> for Robotic Mobile Manipulation</h1>
+              <h1>Model-agnostic multi-skill learning <br> in modular robots</h1>
             </div>
           </div>
 
@@ -52,37 +69,17 @@
           <hr>
 
 
-          <!-- <div class="row"> -->
-          <div style="text-align: center;">
-            <a class="btn btn-primary white_descrip" href="https://arxiv.org/abs/2304.00410" role="button">
-            <i class="ai ai-arxiv fa-1x" style="color:white;"></i>
-            arXiv</a>
-          </div>
-          <!-- </div> -->
-
-
+<!--           <div class="row"> -->
 <!--          <div style="text-align: center;">-->
-<!--            <br>-->
-<!--            <h2>Main Video</h2>-->
-<!--            <br>-->
-<!--            <div class="videoWrapper">-->
-<!--              <iframe width="" height="1135"-->
-<!--                src="https://www.youtube.com/embed/q2sl4nL6vpg" title="Adaptive Skill Coordination for Robotic Mobile Manipulation" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>-->
-<!--              </iframe>-->
-<!--            </div>-->
-<!--          </div>-->
-
-
-          <br><hr><br>
-
-
-          <div style="text-align: center;">
-            <h2>Real-World Deployment in Apartment</h2>
+<!--            <a class="btn btn-primary white_descrip" href="https://arxiv.org/abs/2304.00410" role="button">-->
+<!--            <i class="ai ai-arxiv fa-1x" style="color:white;"></i>-->
+<!--            arXiv</a>-->
+          </div>
+          <div style="text-align: center;align-items: center;">
             <br>
-            <video playsinline autoplay muted loop controls style="width: 100%">
-              <source src="media/neuron1.mp4" type="video/webm"></source>
+            <video playsinline autoplay muted loop controls style="width: 90%">
+              <source src="media/8998-9821.mp4" type="video/webm"></source>
             </video>
-            <h4><i>30x speed</i></h4>
           </div>
 
 
@@ -90,33 +87,58 @@
 
 
           <div style="text-align: center;">
-            <h2>Abstract</h2>
+            <h2>Model-agnostic multi-skill learning in modular robots</h2>
           </div>
+
+
+          <br><hr><br>
+
+          <div style="text-align: center;">
+            <h2>id="Abstract">Abstract</h2>
+
           <br>
           <p style="font-size: 20px; text-indent: 50px">
             Legged robots, locomoting through ‘limbs’, are well-suited for deployment in unstructured environments. Limbs allow a large range of robot morphologies, with various strengths, but each requiring a unique control scheme. As controllers optimized in simulation do not transfer well to the real world (the infamous sim-to-real gap), methods enabling quick learning in the real world, without any assumptions on the specific robot model and its dynamics, are necessary. In this paper, we present a generic method based on Central Pattern Generators (CPGs), that enables the acquisition of multiple basic locomotion skills in parallel, through very few trials. The novelty of our approach, underpinned by a mathematical analysis of the CPG model, is to search for good initial states, instead of optimizing connection weights. Empirical validation on six different robot morphologies demonstrates that our method enables robots to learn primary locomotion skills within fifteen minutes in the real world.
           </p>
+          </div>
 
-          <br>
-          <div style="text-align: center;">
-            <h2>Space state</h2>
+
+          <div style="text-align: center; margin-bottom: 50px;">
+            <h2>id="section3" >Space state</h2>
+          </div>
+          <div style="margin-bottom: 15px; display: flex; align-items: center; justify-content: center;">
+            <img src="media/CPG-network.svg" width="25%" alt="cpg-network">
             <br>
-            <img src="media/state-space.mp4" width="100%">
+            <video playsinline autoplay muted loop controls style="width: 20%; transform: rotate(90deg); margin-left: -20px;">
+            <source src="media/neuron21.mp4" type="video/webm"></source>
+            </video>
+            <br>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: center;">
+            <br>
+            <video playsinline autoplay muted loop controls style="width: 20%">
+              <source src="media/neuron11.mp4" type="video/webm"></source>
+            </video>
+            <video playsinline autoplay muted loop controls style="width: 25%">
+              <source src="media/state-space.mp4" type="video/webm"></source>
+            </video>
           </div>
           <br>
+
+
           <p style="font-size: 20px; text-indent: 50px">
-            State space
+            CPG
           </p>
 
 
 
-
-          <br>
           <div style="text-align: center;">
             <h2>Neuron2</h2>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: center;">
             <br>
-            <img src="media/CPG.svg" width="10%">
-            <video playsinline autoplay muted loop controls style="width: 80%">
+            <img src="media/CPG.svg" width="3%" alt="single cpg">
+            <video playsinline autoplay muted loop controls style="width: 30%">
               <source src="media/neuron2.mp4" type="video/webm"></source>
             </video>
           </div>
@@ -124,6 +146,9 @@
           <p style="font-size: 20px; text-indent: 50px">
             Some text about this
           </p>
+
+
+
 
 
           <br><hr><br>
