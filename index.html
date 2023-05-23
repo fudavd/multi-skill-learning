@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html >
   <head>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
     <meta charset="UTF-8">
 
     <title>Adaptive Skill Coordination</title>
@@ -37,6 +40,28 @@
         overflow-y: auto;
       }
 
+      #pageOverview ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      #pageOverview li {
+        margin-bottom: 10px;
+      }
+
+      #pageOverview a {
+        text-decoration: none;
+      }
+
+      #pageOverview .sub-menu {
+        display: none;
+        padding-left: 10px;
+      }
+
+      #pageOverview li:hover .sub-menu {
+        display: block;
+      }
+
     </style>
     <!--Scripts-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
@@ -46,8 +71,11 @@
     <div class="pageOverview">
         <ul style="list-style-type: none; padding: 5px;overflow-y: auto;">
           <li><a href="#Abstract">Abstract</a></li>
-          <li><a href="#section2">Introduction</a></li>
-          <li><a href="#section3">Methodology</a></li>
+<!--          <li><a href="#Introduction">Introduction</a></li>-->
+          <li><a href="#Methodology">Methodology</a></li>
+                <ul class="sub-menu">
+                  <li><a href="#Space state">Space State</a></li>
+                </ul>
         </ul>
     </div>
     <div class="container" style="margin-left: 20%; padding: 20px; align-content: center;overflow-y: auto;">
@@ -74,6 +102,7 @@
 <!--            <a class="btn btn-primary white_descrip" href="https://arxiv.org/abs/2304.00410" role="button">-->
 <!--            <i class="ai ai-arxiv fa-1x" style="color:white;"></i>-->
 <!--            arXiv</a>-->
+
           </div>
           <div style="text-align: center;align-items: center;">
             <br>
@@ -94,17 +123,25 @@
           <br><hr><br>
 
           <div style="text-align: center;">
-            <h2>id="Abstract">Abstract</h2>
-
-          <br>
-          <p style="font-size: 20px; text-indent: 50px">
+            <h2 id="Abstract">Abstract!</h2>
+          <p style="font-size: 20px; text-indent: 0px; text-align: justify; margin-left: 200px; margin-right: 200px">
             Legged robots, locomoting through ‘limbs’, are well-suited for deployment in unstructured environments. Limbs allow a large range of robot morphologies, with various strengths, but each requiring a unique control scheme. As controllers optimized in simulation do not transfer well to the real world (the infamous sim-to-real gap), methods enabling quick learning in the real world, without any assumptions on the specific robot model and its dynamics, are necessary. In this paper, we present a generic method based on Central Pattern Generators (CPGs), that enables the acquisition of multiple basic locomotion skills in parallel, through very few trials. The novelty of our approach, underpinned by a mathematical analysis of the CPG model, is to search for good initial states, instead of optimizing connection weights. Empirical validation on six different robot morphologies demonstrates that our method enables robots to learn primary locomotion skills within fifteen minutes in the real world.
           </p>
           </div>
 
 
           <div style="text-align: center; margin-bottom: 50px;">
-            <h2>id="section3" >Space state</h2>
+            <h2 id="Methodology">Methodology</h2>
+            <p style="font-size: 20px; text-indent: 50px">
+            CPG
+
+              \(\begin{align}\label{eq:ODE_neurons}
+            % \begin{split}
+                \dot{x}_i = w_{y_ix_i}y_i + \sum_{j \in \mathcal{N}_i} x_{j} w_{x_jx_i} &&\dot{y}_i = w_{x_iy_i}x_i
+            % \end{split}
+              \end{align}\)
+            </p>
+            <h3 id="Space state" >Space state</h3>
           </div>
           <div style="margin-bottom: 15px; display: flex; align-items: center; justify-content: center;">
             <img src="media/CPG-network.svg" width="25%" alt="cpg-network">
@@ -187,6 +224,10 @@
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
+    <script>
+    MathJax.typesetPromise();
+    </script>
     </div>
   </body>
 </html>
+
