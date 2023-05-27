@@ -188,7 +188,7 @@
           <br>
           <br>
           <div style="text-align: justify; margin-bottom: 20px;">
-            <h2 id="Tasks">Task description</h2>
+            <h2 id="Tasks">Task description</h2><hr>
             <p style="font-size: 20px;">
               Locomotion is a pre-requisite for complex behaviour in mobile robots (like foraging, and scanning the environment).
               Being able to learn locomotion skills quickly, is therefore a must when we deploy robots in unseen environments where we lack a model of the world, i.e. a model-free approach.
@@ -199,17 +199,18 @@
               <li style="text-align: justify; font-size: 20px; margin-left: 25px;  margin-bottom: 10px;">
                 <b class="term">Gait (→)</b>: Maximizing planar displacement from starting position in a fixed time-interval
               </li>
-              <li style="text-align: justify; font-size: 20px; margin-left: 25px;  margin-bottom: 20px;">
+              <li style="text-align: justify; font-size: 20px; margin-left: 25px;  margin-bottom: 50px;">
                 <b class="term">Clockwise-</b> and <b class="term">anti-Clockwise Rotation (⟳/⟲)</b>: Maximizing planar rotation in a fixed time-interval.
               </li>
             </ul>
           </div>
 
           <div style="text-align: justify; margin-bottom: 20px;">
-            <h2 id="Methodology">How it works</h2>
+            <h2 id="Methodology">How it works</h2><hr>
             <p style="font-size: 20px; text-indent: 50px">
-              CPGs are pairs of artificial neurons that reciprocally inhibit and excite each other to produce oscillatory behaviour, and can be described mathematically as a set of Ordinary Differential Equations (ODE's) as shown below.
-              Originally, CPGs were used to describe the behaviour of neurons found in the spinal cords of several animals, but have now become popular in robotics as a form of bio-inspired control due to their functional smoothness and cyclical behaviour.
+              CPGs are pairs of artificial neurons that reciprocally inhibit and excite each other to produce oscillatory behaviour, and can be described mathematically as a set of Ordinary Differential Equations as shown below.
+              Originally, CPGs were used to describe the behaviour of groups of neuron responsible for generating locomotion patterns found in the spinal cords of several animals.
+              In the last decade, CPGs have become increasingly more popular in robotics as a form of bio-inspired control due to their functional smoothness and cyclical behaviour.
             </p>
           </div>
           <div style="text-align: center; margin-bottom: 50px;">
@@ -247,8 +248,8 @@
           <div style="text-align: center; margin-bottom: 20px;">
               <img src="media/gecko_blueprint.png" width="17.5%" alt="gecko blueprint" style="margin-left: 20px; margin-right: 20px;">
               <img src="media/gecko_blueprint_cpg2.png" width="20%" alt="gecko blueprint cpg" style="margin-left: 20px; margin-right: 20px;">
-              <img src="media/CPG-network_clean.svg" width="30%" alt="cpg network" style="margin-left: 20px; margin-right: 20px;">
-            <p style="text-align: justify; font-size: 20px; text-indent: 50px">
+              <img src="media/CPG-network_clean.svg" width="30%" alt="cpg network" style="margin-left: 20px; margin-right: 20px; margin-bottom: 40px;">
+            <p style="text-align: justify; font-size: 20px; text-indent: 50px; margin-bottom: 40px;">
               Although some details may vary, our work shows that in essence the oscillatory behaviour within the CPG-network is invariably defined in terms of the connectivity between neurons and their initial state.
               As a result we can identify two modes of optimisation: 1) Weight optimisation (WO), which is a standard way of optimizing CPGs; and 2) Initial State optimisation (ISO), which (to our knowledge) has never been investigated.
               Our paper provides a thorough insight to the difference between WO and ISO and their mathematical properties.
