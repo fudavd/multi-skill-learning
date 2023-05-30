@@ -19,6 +19,7 @@
     <style>
       a {
         text-decoration: none;
+        color: #007ed3;
       }
       a:hover {
         color: #000000FF;
@@ -33,7 +34,6 @@
       .inline-list dt,
       .inline-list dd {
         margin-right: 10px;
-        /*margin-left: 10px;*/
       }
 
       .videoWrapper iframe {
@@ -49,7 +49,8 @@
         top: 0;
         left: 0;
         width: 15%;
-        background-color: #f2f2f2;
+        max-width: 350px;
+        background-color: #f1f1f1;
         padding: 20px;
         height: 100vh;
         overflow-y: auto;
@@ -77,13 +78,177 @@
         display: block;
       }
 
+
+      header {
+        background-color: #f1f1f1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+  .mainpage {
+      margin-left: 20%;
+      padding: 3%;
+      max-width: 1600px;
+      align-content: center;
+      overflow-y: auto;
+      font-family: 'Adamina', serif
+    }
+
+  .mobile-menu {
+    display: none;
+  }
+
+  @media (max-width: 1300px) {
+    .desktop-menu {
+      display: none;
+  }
+
+  .mobile-menu {
+    display: block;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 65px;
+    background-color: #f1f1f1;
+    z-index: 1;
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dropbtn {
+    background-color: inherit;
+    color: #000;
+    /*padding: 10px;*/
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+  .dropbtn:hover{
+    background: #f9f9f9;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 2;
+  }
+
+  .dropdown-content a {
+    color: #007ed3;
+    padding: 12px ;
+    text-decoration: none;
+    display: block;
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  .pageOverview {
+    display: none;
+    width: 0;
+  }
+
+  .mainpage {
+    margin-top: 100px;
+    margin-left: 0;
+    padding: 5%;
+    align-content: center;
+    overflow-y: auto;
+    font-family: 'Adamina', serif
+  }
+}
+
+
     </style>
     <!--Scripts-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
   </head>
 
   <body>
+  <header>
+
+    <nav class="mobile-menu">
+      <div style="display: flex; align-items: center; justify-content: center;">
+        <dl class="inline-list" style="width: 20%; font-size: 14px; margin-right: auto; min-width: fit-content">
+          <dt>
+            <dl class="inline-list" style="width: 100%; font-size: 14px; margin-right: auto">
+            <div class="dropdown">
+            <button class="dropbtn" style="justify-content: left; align-items: center"><img src="media/menu.png" style="width: 100%; max-width: 50px; padding: inherit"></button>
+            <div class="dropdown-content">
+            <ul style="list-style-type: none; padding: 10px;overflow-y: auto;">
+              <li><a href="#Abstract">Abstract</a></li>
+              <li><a href="#Task">Task Description</a></li>
+              <li><a href="#Methodology">How it works</a></li>
+                    <ul class="sub-menu">
+                      <li><a href="#Space state">Space State</a></li>
+                    </ul>
+                    <ul class="sub-menu">
+                      <li><a href="#ISO">Initial State Optimisation</a></li>
+                    </ul>
+                    <ul class="sub-menu">
+                      <li><a href="#B&P">Bootstrapping and Parallelization</a></li>
+                    </ul>
+            </ul>
+            </div>
+            </div>
+            </dl>
+          </dt>
+          <dt style="min-width: fit-content;">
+          <div>
+            <a href="https://cs.vu.nl/ci/" target="_blank" style="color: #8c8484; border-bottom: None">
+            <img src="media/Logo_VU.png" alt="VU logo" style="width: 150px; padding-left: 2%"></a>
+          </div>
+          </dt>
+        </dl>
+        <dl class="inline-list" style="width: 80%; font-size: 14px; margin-right: 0; margin-left: auto; margin-top: -9px">
+          <dd style="margin-left: auto">
+          <div class="date">
+            <div class="month" style="color: #8c8484">UNDER REVIEW</div>
+            <div class="year" style="color: #8c8484">2023</div>
+          </div>
+          </dd>
+          <dd style="border-left: 1px solid; color: #8c8484; padding-left: 1%;">
+          <div class="date">
+            <div class="month" style="color: #8c8484">Github</div>
+            <div class="year" style="color: #8c8484"><a href="https://github.com/fudavd/multi-skill-learning/tree/main/src" target="_blank" style="color: #8c8484">Code</a></div>
+          </div>
+          </dd>
+          <dd style="border-left: 1px solid; color: #8c8484; padding-left: 1%;">
+          <div class="date">
+            <div class="month" style="color: #8c8484">Paper</div>
+            <div class="year" style="color: #8c8484">-</div>
+          </div>
+          </dd>
+          <dd style="border-left: 1px solid; color: #8c8484; padding-left: 1%;">
+          <div class="date">
+            <div class="month" style="color: #8c8484">YouTube</div>
+            <div class="year" style="color: #8c8484;"><a href="https://www.youtube.com/@fudaprojectschannel419" target="_blank" style="color: #8c8484">Video</a>
+            </div>
+          </div>
+          </dd>
+        </dl>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+
     <div class="pageOverview">
+        <div>
+          <a href="https://cs.vu.nl/ci/" target="_blank" style="color: #8c8484; border-bottom: None" >
+          <img src="media/Logo_VU.png" width="100%" alt="VU logo" style="padding: 10px; max-width: 300px"></a>
+        </div>
+        <hr>
         <ul style="list-style-type: none; padding: 10px;overflow-y: auto;">
           <li><a href="#Abstract">Abstract</a></li>
           <li><a href="#Task">Task Description</a></li>
@@ -100,18 +265,19 @@
 <!--          <li><a href="#Results">Results</a></li>-->
         </ul>
     </div>
-    <div class="container" style="margin-left: 20%; padding: 3%; align-content: center;overflow-y: auto; font-family: 'Adamina', serif">
+
+    <div class="mainpage">
       <div class="row">
         <hr>
           <div class="page-header">
             <div>
-              <h1 style="text-align: center; font-size: 56px;">A model-free method to learn <br>multiple skills in modular robots</h1>
+              <h1 style="text-align: center; font-size: 56px;">A model-free method to learn multiple skills in modular robots</h1>
             </div>
           </div>
         <hr><br>
 
-        <div style="display: flex; align-items: center; justify-content: center;">
-        <dl class="inline-list" style="width: 100%; font-size: 14px; margin-right: auto">
+        <div id="subheader" style="display: flex; align-items: center; justify-content: center;">
+        <dl id="mobile-content" class="inline-list" style="width: 100%; font-size: 14px; margin-right: auto; min-width: fit-content">
           <dt>
           <div class="date">
             <div class="month" style="color: #8c8484"><a href="https://orcid.org/0000-0002-7972-1649" target="_blank" style="color: #8c8484">Fuda van Diggelen</a></div>
@@ -137,7 +303,7 @@
           </div>
           </dt>
         </dl>
-        <dl class="inline-list" style="width: 100%; font-size: 14px; margin-right: 0; margin-left: auto">
+        <dl id="desktop-content" class="inline-list" style="width: 100%; font-size: 14px; margin-right: 0; margin-left: auto;">
           <dd style="margin-left: auto">
           <div class="date">
             <div class="month" style="color: #8c8484">UNDER REVIEW</div>
@@ -318,7 +484,7 @@
             \hspace{2em}
             \)
             <figure >
-              <img src="media/vectr_field_traj.svg" alt="cpg network" style="margin-left: 3%; margin-right: 3%;">
+              <img src="media/vectr_field_traj.svg" alt="cpg network" style="margin-left: 3%; margin-right: 3%; width: 100%">
               <figcaption>Vector field in state-space with corresponding trajectory</figcaption>
             </figure>
           </div>
@@ -387,13 +553,13 @@
               We can use this to our advantage with the following two tricks:
             </p>
             <ul>
-              <li style="text-align: justify; font-size: 20px; margin-left: 50px;  margin-bottom: 10px;">
+              <li style="text-align: justify; font-size: 20px; margin-left: 5%;  margin-bottom: 10px;">
                 <b class="term">Bootstrapping</b>: The intermediate CPG-network states from \(\mathcal{S}\) can be considered as additional possible initial state samples.
                 This increases the amount of samples that we get \(N\) times, we assess the performance of a state at each time-step instead of assessing only one.
                 The longer a trial lasts, the more bootstrapped samples we obtain.
 
               </li>
-              <li style="text-align: justify; font-size: 20px; margin-left: 50px;  margin-bottom: 20px;">
+              <li style="text-align: justify; font-size: 20px; margin-left: 5%;  margin-bottom: 20px;">
                 <b class="term">Parallelization</b>: The behavioural performance can be assessed on \(\mathcal{D}\) for multiple skills at once, instead of evaluating a single skill metric.
                 Optimization of specific skills do not interfere when the dynamics of the CPG-network are frozen.
                 This allows information to flow between learning tasks as can extract usefull information among all skills at once.
@@ -401,10 +567,10 @@
             </ul>
           </div>
           <div style="display: flex; align-items: center; justify-content: center;">
-            <img src="media/2tricks.svg" alt="2tricks" style="margin-left: 3%; margin-right: 60px; width: 30%;">
-            <figure style="margin-left: 60px; margin-right: 100px; align-items: center; justify-content: center; width: 20%;">
-              <figcaption style="font-family: monospace; font-size: 25px">Trial fitness:</figcaption>
-              <img src="media/alg.svg" alt="alg">
+            <img src="media/2tricks.svg" alt="2tricks" style="margin-left: 3%; margin-right: 3%; width: 30%;">
+            <figure style="margin-left: 3%; margin-right: 5%; align-items: center; justify-content: center; width: 20%;">
+              <figcaption style="font-family: monospace; font-size: 100%">Trial fitness:</figcaption>
+              <img src="media/alg.svg" alt="alg" style="width: 100%">
             </figure>
           </div>
 
@@ -459,12 +625,11 @@
 
           <div class="col-md-1"></div>
       </div>
-    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
     <script>
     MathJax.typesetPromise();
     </script>
-    </div>
+    <script src="script.js"></script>
   </body>
 </html>
 
