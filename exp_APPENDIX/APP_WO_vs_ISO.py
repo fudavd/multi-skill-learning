@@ -163,4 +163,4 @@ if __name__ == "__main__":
     ax.legend()
     figure.tight_layout()
     # figure.set_size_inches(15, 9)
-    figure.savefig(f"{results_dir}/Fit_curve.pdf", bbox_inches='tight')
+    figure.savefig(f"{results_dir}/APP_curve.pdf", bbox_inches='tight')

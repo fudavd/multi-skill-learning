@@ -1,7 +1,4 @@
 import os
-import copy
-import numpy as np
-
 
 def search_file_list(rootname, file_name):
     file_list = []

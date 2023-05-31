@@ -1,4 +1,6 @@
 thirdparty/revolve2/core
+-e thirdparty/isaacgym/python
+thirdparty/revolve2/runners/isaacgym
 
 numpy
 scipy
