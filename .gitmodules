@@ -1,6 +1,6 @@
 [submodule "thirdparty/revde"]
 	path = thirdparty/revde
 	url = git@github.com:fudavd/revde.git
-[submodule "thirdparty/revolve2"]
-	path = thirdparty/revolve2
-	url = git@github.com:ci-group/revolve2.git
+[submodule "thirdparty/multi-stitch-stream"]
+	path = thirdparty/multi-stitch-stream
+	url = git@github.com:fudavd/multi-stitch-stream.git
