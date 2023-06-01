@@ -21,7 +21,7 @@ def set_controller(robot: ModularRobot, genome, network_struct, genome_type):
     if genome_type.__contains__('weights'):
         controller._weight_matrix = network_struct.make_connection_weights_matrix_from_params(genome[:n_weights])
     if genome_type.__contains__('states'):
-        controller._weight_matrix = network_struct.make_connection_weights_matrix_from_params(genome[-n_weights:])
+        controller._state = genome[-n_weights:]
     return controller
 
 
@@ -49,25 +49,6 @@ def fitness(trajectory: np.array, type: AnyStr = "gait"):
         z_rot = np.unwrap(trajectory[-1, :], period=2.0 * np.pi)
         fitness_val = z_rot[0] - z_rot[-1]
     return fitness_val / 60
-
-
-def update_learner(learner, state_buffer, genomes, fitnesses, skill):
-    mean_f = 0
-
-    fitness_vec = []
-    for ind in range(len(learner.x_new)):
-        trajectory = state_buffer[ind, :, :]
-        fitness_val = fitness(trajectory, skill)
-        fitness_vec.append(-fitness_val)
-        fitnesses.append(fitness_val)
-        mean_f += fitness_val / len(learner.x_new)
-    learner.f = np.array(fitness_vec)
-    learner.x = learner.x_new
-    learner.x_new = np.array([])
-
-    new_genomes = learner.get_new_genomes()
-    print(f"Update Learner gen: {learner.gen} \t| {mean_f} \t{-learner.f_best_so_far[-1]} ")
-    return np.vstack((genomes, new_genomes)), fitnesses
 
 
 def save_states(gym, t_k, envs, robot_handles, state_buffer):

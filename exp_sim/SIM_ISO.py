@@ -1,6 +1,10 @@
 """
 Loading and testing
 """
+import copy
+import os
+import random
+
 from numpy.random import default_rng
 
 from isaacgym import gymapi
@@ -14,7 +18,7 @@ import tempfile
 from pyrr import Quaternion, Vector3
 
 from sim_utils import set_controller, save_states, update_robots, fitness
-from utils.Learners import DifferentialEvolution
+from utils.Learners import RandomSampling
 from thirdparty.revolve2.standard_resources.revolve2.standard_resources import modular_robots
 from revolve2.core.modular_robot import ModularRobot
 from revolve2.core.physics.running import PosedActor
@@ -25,20 +29,19 @@ import time
 
 rng = default_rng()
 
-
-learner_params = {'evaluate_objective_type': 'full', 'pop_size': 10, 'max_gen': 10, 'CR': 0.9, 'F': 0.5, 'type': 'revde',
-                  'genome_type': 'weights'}
+learner_params = {'evaluate_objective_type': 'full', 'max_gen': 1, 'pop_size': 150, 'window_time': 60,
+                  'type': 'rs', 'sampling': np.random.uniform,
+                  'genome_type': 'states'}
 
 configuration_file: Dict = {
     'n_reps': 30,
     'skills': ["gait", "rot_l", "rot_r"],
     'results_dir': './results/SIM/WO',
     'robot': 'spider',
-    'controller_update_time': 1/10,
-    'trial_time': 60,
+    'controller_update_time': 1 / 10,
+    'trial_time': 120,
     'learner_params': None
 }
-
 
 def simulate_robot(params, args):
     n_reps = params['n_reps']
@@ -48,24 +51,42 @@ def simulate_robot(params, args):
     controller_update_time = params['controller_update_time']
     trial_time = params['trial_time']
     params_learner = params['learner_params']
+    window_time = params_learner['window_time']
     assert params['learner_params'] is not None, "Expected RevDE configuration"
 
-    def update_learner(learner, state_buffer, genomes, fitnesses, skill):
-        mean_f = 0
+    def parse_trial(state_buffer_eps, window, controller_states, num_skills):
+        rewards = np.empty((0, num_skills))
+        n_start = 0
+        for n_start in range(1, state_buffer_eps.shape[1] - window):
+            trajectory = state_buffer_eps[:, n_start:n_start + window]
+            fitness_rotl = fitness(trajectory, "rot_l")
+            fitness_rotr = fitness(trajectory, "rot_r")
+            gait = fitness(trajectory, "gait")
+            rewards = np.vstack((rewards, [gait, fitness_rotl, fitness_rotr]))
+        return controller_states[1:n_start + window + 1, :], np.unwrap(rewards, axis=0)
+
+    def update_learner(learner, state_buffer, controllers_buffer, genomes, fitnesses, full_rewards, full_states, window_time):
+        window_size = int(window_time / controller_update_time)
+        total_max = np.array([-np.inf] * 3)
         fitness_vec = []
-        for ind in range(len(learner.x_new)):
-            trajectory = state_buffer[ind, :, :]
-            fitness_val = fitness(trajectory, skill)
-            fitness_vec.append(-fitness_val)
-            fitnesses.append(fitness_val)
-            mean_f += fitness_val / len(learner.x_new)
+        mean_f = 0
+        for i in range(len(learner.x_new)):
+            controller_buffer = np.array(controllers_buffer[i])
+            states, rewards = parse_trial(state_buffer[i, :, :], window_size, controller_buffer, num_skills)
+            full_states = np.vstack((full_states, states[:-window_size, :]))
+            full_rewards = np.vstack((full_rewards, rewards[:, :]))
+
+            trial_max = np.max(rewards, axis=0)
+            total_max = np.max((total_max, trial_max), axis=0)
+
+            fitness_vec.append(-trial_max)
+            fitnesses.append(trial_max)
+            mean_f += trial_max / len(learner.x_new)
         learner.f = np.array(fitness_vec)
         learner.x = learner.x_new
         learner.x_new = np.array([])
-
         new_genomes = learner.get_new_genomes()
-        print(f"Update Learner gen: {learner.gen} \t| {mean_f} \t{-learner.f_best_so_far[-1]} ")
-        return np.vstack((genomes, new_genomes)), fitnesses
+        return np.vstack((genomes, new_genomes)), fitnesses, full_rewards, full_states
 
     # configure sim
     sim_params = gymapi.SimParams()
@@ -114,7 +135,7 @@ def simulate_robot(params, args):
     asset_options.armature = 0.01
 
     # Set up the env grid
-    num_envs = 3 * params_learner['pop_size']
+    num_envs = params_learner['pop_size']
 
     spacing = 1
     env_lower = gymapi.Vec3(-spacing, -spacing, 0.0)
@@ -167,7 +188,6 @@ def simulate_robot(params, args):
     network_struct = mkcpg(active_hinges_sim)
 
     print("Creating %d environments" % num_envs)
-
     pose = gymapi.Transform()
     pose.p = gymapi.Vec3(0, 0, 0.04)
     pose.r = gymapi.Quat(0, 0.0, 0.0, 0.707107)
@@ -195,72 +215,100 @@ def simulate_robot(params, args):
     props["stiffness"].fill(1000.0)
     props["damping"].fill(600.0)
 
-    start_time = time.time()
-    for skill in skills:
-        start_rep = time.time()
-        rep_count = 0
+    start_rep = time.time()
+    rep_count = 0
+    num_skills = len(skills)
+    for rep in range(n_reps):
+        finished = num_skills
+        for ind, skill in enumerate(skills):
+            learner_dir = f"./{results_dir}/{robot_name}/{skill}/{robot_name}{rep}"
+            if os.path.isfile(f'{learner_dir}/fitnesses.npy'):
+                print(f'Already learned {robot_name}{rep}: exp = {skill}')
+                finished -= 1
+                continue
+            if not os.path.exists(learner_dir):
+                os.makedirs(learner_dir)
+        if finished == 0:
+            print(f'Already learned {robot_name}{rep}: exp = {skills}')
+            break
 
-        for rep in range(n_reps):
+        _, controller = robot.make_actor_and_controller()
+        rep_count += 1
+        genomes = np.random.uniform(-1, 1, (num_envs, network_struct.num_states))
+        controllers = []
+        controllers_buffer = [None] * num_envs
+        for i in range(num_envs):
+            gym.set_actor_dof_properties(envs[i], robot_handles[i], props)
+            state0 = genomes[i, :]
+            controller_t = set_controller(robot, state0, network_struct, params_learner['genome_type'])
+            controllers.append(controller_t)
+            controllers_buffer[i] = [state0]
+
+        # %% Initialize learner
+        learner = RandomSampling(genomes, num_envs, (-1, 1), params_learner, output_dir=results_dir)
+
+        state_buffer = np.zeros((num_envs, 6, round(trial_time / controller_update_time)))
+        t_k = 0
+        gen = 0
+        start = True
+        fitnesses = []
+        full_states = np.empty((0, network_struct.num_states))
+        full_rewards = np.empty((0, num_skills))
+        # %% Simulate
+        while gen < params_learner['max_gen']:
+            t = gym.get_sim_time(sim)
+            if round(t % controller_update_time, 2) == 0.0:
+                if round(t, 2) % trial_time == 0.0 and not start:
+                    genomes, fitnesses, full_rewards, full_states = update_learner(learner, state_buffer, controllers_buffer,
+                                                                                   genomes, fitnesses,
+                                                                                   full_rewards, full_states, window_time)
+                    for ind in range(len(learner.f)):
+                        genome = learner.x_new[ind, :]
+                        new_controller = set_controller(robot, genome, network_struct, learner_params['genome_type'])
+                        controllers[ind] = new_controller
+                    t_k = 0
+                    gen += 1
+                    state_buffer = np.zeros((num_envs, 6, round(trial_time / controller_update_time)))
+                start = False
+                state_buffer = save_states(gym, t_k, envs, robot_handles, state_buffer)
+                t_k += 1
+                update_robots(gym, controllers, robot_handles, envs, controller_update_time)
+                for i in range(num_envs):
+                    controllers_buffer[i].append(controllers[i]._state)
+
+            # Step the physics
+            gym.simulate(sim)
+            gym.fetch_results(sim, True)
+
+            # Get input actions from the viewer and handle them appropriately
+            if not args.headless:
+                # # Step rendering
+                gym.step_graphics(sim)
+                gym.draw_viewer(viewer, sim, False)
+
+        print(f"Finished learning {skills} on {robot_name}: {rep}")
+        best_ind = np.argmax(full_rewards, axis=0)
+        best_fitness = np.diagonal(full_rewards[best_ind])
+        best_genomes = full_states[best_ind]
+        print(best_fitness)
+        for ind, skill in enumerate(skills):
             learner_dir = f"./{results_dir}/{robot_name}/{skill}/{robot_name}{rep}"
             if not os.path.exists(learner_dir):
                 os.makedirs(learner_dir)
             if os.path.isfile(f'{learner_dir}/fitnesses.npy'):
                 print(f'Already learned {robot_name}{rep}: exp = {skill}')
                 continue
-            print(f'Learning gait for {robot_name}{rep}: exp = {skill}')
-            rep_count += 1
-            genomes = np.random.uniform(-1, 1, (num_envs, network_struct.num_connections))
-            controllers = []
-            for i in range(num_envs):
-                gym.set_actor_dof_properties(envs[i], robot_handles[i], props)
-                weights = genomes[i, :]
-                controller = set_controller(robot, weights, network_struct, learner_params['genome_type'])
-                controllers.append(controller)
 
-            # %% Initialize learner
-            learner = DifferentialEvolution(genomes, num_envs, params_learner['type'], (-1, 1), params_learner, output_dir=learner_dir)
+            np.save(f'{learner_dir}/genomes.npy', full_states[:, ind])
+            np.save(f'{learner_dir}/fitnesses.npy', full_rewards[:, ind])
+            np.save(f'{learner_dir}/f_best.npy', best_fitness[ind])
+            np.save(f'{learner_dir}/x_best.npy', best_genomes[ind, :])
+            np.save(f'{learner_dir}/weights.npy', controller._weight_matrix)
 
-            state_buffer = np.zeros((num_envs, 6, round(trial_time / controller_update_time)))
-            initial_state = np.copy(gym.get_sim_rigid_body_states(sim, gymapi.STATE_ALL))
-            fitnesses = []
-            t_k = 0
-            start = True
-            # %% Simulate
-            while learner.gen < params_learner['max_gen']:
-                t = gym.get_sim_time(sim)
-                if round(t % controller_update_time, 2) == 0.0:
-                    if round(t, 2) % trial_time == 0.0 and not start:
-                        genomes, fitnesses = update_learner(learner, state_buffer, genomes,
-                                                            fitnesses, skill)
+    print(
+        f'Learned {robot_name}, {skills.__iter__()} for {rep_count} repetitions: avg {(time.time() - start_rep) / 60 / max(1, rep_count)}min')
 
-                        for ind in range(len(learner.f)):
-                            genome = learner.x_new[ind, :]
-                            new_controller = set_controller(robot, genome, network_struct, learner_params['genome_type'])
-                            controllers[ind] = new_controller
-                        gym.set_sim_rigid_body_states(sim, initial_state, gymapi.STATE_ALL)
-                        t_k = 0
-                        state_buffer = np.zeros((num_envs, 6, round(trial_time / controller_update_time)))
-                    start = False
-                    state_buffer = save_states(gym, t_k, envs, robot_handles, state_buffer)
-                    t_k += 1
-                    update_robots(gym, controllers, robot_handles, envs, controller_update_time)
-
-                # Step the physics
-                gym.simulate(sim)
-                gym.fetch_results(sim, True)
-
-                # Get input actions from the viewer and handle them appropriately
-                if not args.headless:
-                    # # Step rendering
-                    gym.step_graphics(sim)
-                    gym.draw_viewer(viewer, sim, False)
-
-            print(f"Finished learning {skill} on {robot_name}: {rep}")
-            learner.save_results()
-            np.save(f'{learner_dir}/genomes.npy', genomes)
-            np.save(f'{learner_dir}/fitnesses.npy', np.array(fitnesses))
-        print(f'Learned {robot_name}, {skill} for {rep_count} repetitions: avg {(time.time() - start_rep) / 60 / max(1, rep_count)}min')
-    print(f"destroying simulation: {(time.time() - start_time) / 3600}")
+    print(f"destroying simulation: {(time.time() - start) / 3600}")
     gym.destroy_sim(sim)
 
 
