@@ -1,5 +1,10 @@
 """
-Loading and testing
+Isaac Gym: Weight Optimisation (WO)
+    Runs a standard WO experiment (as presented in paper) for a given robot, and stores the data in ./results/SIM/WO
+
+How to use:
+    From the root directory you can run from terminal
+    python ./exp_sim/SIM_WO.py --robot <robot name>
 """
 from numpy.random import default_rng
 

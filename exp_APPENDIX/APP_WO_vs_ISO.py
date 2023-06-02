@@ -132,10 +132,10 @@ if __name__ == "__main__":
     target_network = CPG_network(np.array([0] * n_cpgs), 0.05)
     target_network.set_A(target_A)
     target_network.reset_controller()
-    # if not os.path.exists(f'{results_dir}/WO/{n_runs - 1}'):
-    #     generate_data_wo(results_dir, target_network, n_runs)
-    # if not os.path.exists(f'{results_dir}/ISO/{n_runs - 1}'):
-    #     generate_data_iso(results_dir, target_network, n_runs)
+    if not os.path.exists(f'{results_dir}/WO/{n_runs - 1}'):
+        generate_data_wo(results_dir, target_network, n_runs)
+    if not os.path.exists(f'{results_dir}/ISO/{n_runs - 1}'):
+        generate_data_iso(results_dir, target_network, n_runs)
 
     # %% Data Analysis
     exp_name = ['ISO', 'WO']
@@ -158,9 +158,7 @@ if __name__ == "__main__":
 
     ax.set_xlabel('Generations', size=16)
     ax.set_ylabel('Mean absolute error', size=16)
-    # ax.set_ylim(0, max())
     ax.grid()
     ax.legend()
     figure.tight_layout()
-    # figure.set_size_inches(15, 9)
     figure.savefig(f"{results_dir}/APP_curve.pdf", bbox_inches='tight')

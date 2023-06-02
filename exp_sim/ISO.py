@@ -1,10 +1,11 @@
 """
-Loading and testing
-"""
-import copy
-import os
-import random
+Isaac Gym: Initial State Optimisation (ISO)
+    Runs a standard ISO experiment (as presented in paper) for a given robot, and stores the data in ./results/SIM/ISO
 
+How to use:
+    From the root directory you can run from terminal
+    python ./exp_sim/SIM_WO.py --robot <robot name>
+"""
 from numpy.random import default_rng
 
 from isaacgym import gymapi
