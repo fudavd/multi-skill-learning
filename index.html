@@ -5,7 +5,7 @@
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=.5, minimum-scale=.5">
+    <meta name="viewport" content="width=device-width, initial-scale=.6, minimum-scale=.6">
 <!--    <meta name="viewport" content="width=device-width,minimum-scale=1">-->
 
     <title>Multi-skill learning</title>
@@ -56,6 +56,7 @@
         padding: 20px;
         height: 100vh;
         overflow-y: auto;
+        z-index: 2;
       }
 
       #pageOverview ul {
@@ -91,7 +92,7 @@
   .mainpage {
       margin-left: 20%;
       padding: 3%;
-      max-width: 1600px;
+      max-width: 1200px;
       align-content: center;
       overflow-y: auto;
       font-family: 'Adamina', serif
@@ -115,7 +116,7 @@
     width: 100%;
     height: 65px;
     background-color: #f1f1f1;
-    z-index: 1;
+    z-index: 2;
   }
 
   .dropdown {
@@ -161,7 +162,7 @@
   }
 
   .mainpage {
-    margin-top: 100px;
+    margin-top: 70px;
     margin-left: 0;
     padding: 5%;
     align-content: center;
@@ -188,8 +189,8 @@
             <button class="dropbtn" style="justify-content: left; align-items: center"><img src="media/menu.png" style="width: 100%; max-width: 50px; padding: inherit"></button>
             <div class="dropdown-content">
             <ul style="list-style-type: none; padding: 10px;overflow-y: auto;">
-              <li><a href="#Abstract">Abstract</a></li>
-              <li><a href="#Task">Task Description</a></li>
+<!--              <li><a href="#Abstract">Abstract</a></li>-->
+<!--              <li><a href="#Task">Task Description</a></li>-->
               <li><a href="#Methodology">How it works</a></li>
                     <ul class="sub-menu">
                       <li><a href="#Space state">Space State</a></li>
@@ -221,8 +222,7 @@
           </dd>
           <dd style="border-left: 1px solid; color: #8c8484; padding-left: 1%;">
           <div class="date">
-            <div class="month" style="color: #8c8484">Github</div>
-            <div class="year" style="color: #8c8484"><a href="https://github.com/fudavd/multi-skill-learning/tree/main/src" target="_blank" style="color: #8c8484">Code</a></div>
+            <div class="year" style="color: #8c8484"><a href="https://github.com/fudavd/multi-skill-learning/tree/main/" target="_blank" style="color: #8c8484">Github<br>Code</a></div>
           </div>
           </dd>
           <dd style="border-left: 1px solid; color: #8c8484; padding-left: 1%;">
@@ -233,8 +233,7 @@
           </dd>
           <dd style="border-left: 1px solid; color: #8c8484; padding-left: 1%;">
           <div class="date">
-            <div class="month" style="color: #8c8484">YouTube</div>
-            <div class="year" style="color: #8c8484;"><a href="https://www.youtube.com/@fudaprojectschannel419" target="_blank" style="color: #8c8484">Video</a>
+            <div class="year" style="color: #8c8484;"><a href="https://www.youtube.com/@fudaprojectschannel419" target="_blank" style="color: #8c8484">YouTube<br>Video</a>
             </div>
           </div>
           </dd>
@@ -252,8 +251,8 @@
         </div>
         <hr>
         <ul style="list-style-type: none; padding: 10px;overflow-y: auto;">
-          <li><a href="#Abstract">Abstract</a></li>
-          <li><a href="#Task">Task Description</a></li>
+<!--          <li><a href="#Abstract">Abstract</a></li>-->
+<!--          <li><a href="#Task">Task Description</a></li>-->
           <li><a href="#Methodology">How it works</a></li>
                 <ul class="sub-menu">
                   <li><a href="#Space state">Space State</a></li>
@@ -315,7 +314,7 @@
           <dd style="border-left: 1px solid; color: #8c8484; padding-left: 1%;">
           <div class="date">
             <div class="month" style="color: #8c8484">Github</div>
-            <div class="year" style="color: #8c8484"><a href="https://github.com/fudavd/multi-skill-learning/tree/main/src" target="_blank" style="color: #8c8484">Code</a></div>
+            <div class="year" style="color: #8c8484"><a href="https://github.com/fudavd/multi-skill-learning/tree/main/" target="_blank" style="color: #8c8484">Code</a></div>
           </div>
           </dd>
           <dd style="border-left: 1px solid; color: #8c8484; padding-left: 1%;">
@@ -333,100 +332,139 @@
           </dd>
         </dl>
         </div>
-
-          </div>
-          <div style="text-align: center;align-items: center;">
-            <br>
-            <video playsinline autoplay muted loop style="width: 100%; border: 0px solid transparent">
-              <source src="media/8998-9821.mp4" type="video/mp4"></source>
-            </video>
+      </div>
+      <br><br><br><br>
+      <div style="text-align: center;align-items: center;">
+          <b class="term" style="font-size: 30px; margin-bottom: 10px;">
             Three Locomotion skills were learned in parallel under 15 minutes in the real world.
-          </div>
+          </b>
+      </div>
+      <div>
+          <br>
+          <video playsinline autoplay muted loop style="width: 100%; border: 0px solid transparent">
+            <source src="media/8998-9821.mp4" type="video/mp4"></source>
+          </video>
+        </div>
 
-        <br><br>
-        <br><br>
+      <br><br>
+      <br><br>
 
-          <div style="text-align: center;">
-            <h2 id="Abstract">Abstract</h2>
-          <p style="font-size: 18px; text-align: justify; margin-left: 12.5%; margin-right: 12.5%">
-            Legged robots are well-suited for deployment in unstructured environments through the use of 'limbs'. This results in a large range of robot morphologies, with various strengths, but each requiring a unique control scheme. As controllers optimized in simulation do not transfer well to the real world (the infamous sim-to-real gap), methods enabling quick learning in the real world, without any assumptions on the specific robot model and its dynamics, are necessary. In this paper, we present a generic method based on Central Pattern Generators (CPGs), that enables the acquisition of multiple basic locomotion skills in parallel, through very few trials. The novelty of our approach, underpinned by a mathematical analysis of the CPG model, is to search for good initial states, instead of optimizing connection weights. Empirical validation on six different robot morphologies demonstrates that our method enables robots to learn primary locomotion skills within fifteen minutes in the real world.
+<!--        <div style="text-align: center;">-->
+<!--          <h2 id="Abstract">Abstract</h2>-->
+<!--        <p style="font-size: 16px; text-align: justify; margin-left: 12.5%; margin-right: 12.5%">-->
+<!--          Legged robots are well-suited for deployment in unstructured environments through the use of 'limbs'. This results in a large range of robot morphologies, with various strengths, but each requiring a unique control scheme. As controllers optimized in simulation do not transfer well to the real world (the infamous sim-to-real gap), methods enabling quick learning in the real world, without any assumptions on the specific robot model and its dynamics, are necessary. In this paper, we present a generic method based on Central Pattern Generators (CPGs), that enables the acquisition of multiple basic locomotion skills in parallel, through very few trials. The novelty of our approach, underpinned by a mathematical analysis of the CPG model, is to search for good initial states, instead of optimizing connection weights. Empirical validation on six different robot morphologies demonstrates that our method enables robots to learn primary locomotion skills within fifteen minutes in the real world.-->
+<!--        </p>-->
+<!--        </div>-->
+<!--        <br>-->
+<!--        <br>-->
+<!--        <br>-->
+
+        <div style="text-align: justify; margin-bottom: 20px;">
+<!--          <h2 id="Tasks">Task description</h2><hr>-->
+          <p style="font-size: 16px;">
+            Locomotion is a pre-requisite for complex behaviour in mobile robots (like foraging, and scanning the environment).
+            Being able to learn locomotion skills quickly, is therefore a must when we deploy robots in unseen environments where we lack a model of the world, i.e. a model-free approach.
+            In this work, 6 modular robots of various design are tasked to learn three locomotion skills from scratch with a training budget of 15 minutes in the real world.
+            The skills are defined as follows:
           </p>
+          <ul>
+            <li style="text-align: justify; font-size: 16px; margin-left: 2%;  margin-bottom: 10px;">
+              <b class="term">Gait (→)</b>: Maximizing planar displacement from starting position in a fixed time-interval
+            </li>
+            <li style="text-align: justify; font-size: 16px; margin-left: 2%;">
+              <b class="term">Clockwise-</b> and <b class="term">anti-Clockwise Rotation (⟳/⟲)</b>: Maximizing planar rotation in a fixed time-interval.
+            </li>
+          </ul>
+        </div>
+        <div style="margin-bottom: 70px;">
+          <p style="font-size: 16px;">
+            Our modular robots are either hand-designed (top row of picture below) or a product of automated design using Evolutionary Computing (bottom row).
+          </p>
+          <div style="text-align: center; display: flex; justify-content: center; align-items: center;">
+            <figure>
+              <img src="media/robots/ant.png" alt="ant" style="margin-left: 3%; margin-right: 3%; width: 90%;">
+              <figcaption>Ant</figcaption>
+            </figure>
+            <figure>
+              <img src="media/robots/gecko.png" alt="gecko" style="margin-left: 3%; margin-right: 3%; width: 90%;">
+              <figcaption>Gecko</figcaption>
+            </figure>
+            <figure>
+              <img src="media/robots/spider.png" alt="spider" style="margin-left: 3%; margin-right: 3%; width: 90%;">
+              <figcaption>Spider</figcaption>
+            </figure>
           </div>
-          <br>
-          <br>
-          <br>
-          <div style="text-align: justify; margin-bottom: 20px;">
-            <h2 id="Tasks">Task description</h2><hr>
-            <p style="font-size: 20px;">
-              Locomotion is a pre-requisite for complex behaviour in mobile robots (like foraging, and scanning the environment).
-              Being able to learn locomotion skills quickly, is therefore a must when we deploy robots in unseen environments where we lack a model of the world, i.e. a model-free approach.
-              In this work, 6 modular robots of various design are tasked to learn three locomotion skills from scratch with a training budget of 15 minutes in the real world.
-              The skills are defined as follows:
-            </p>
-            <ul>
-              <li style="text-align: justify; font-size: 20px; margin-left: 2%;  margin-bottom: 10px;">
-                <b class="term">Gait (→)</b>: Maximizing planar displacement from starting position in a fixed time-interval
-              </li>
-              <li style="text-align: justify; font-size: 20px; margin-left: 2%;  margin-bottom: 50px;">
-                <b class="term">Clockwise-</b> and <b class="term">anti-Clockwise Rotation (⟳/⟲)</b>: Maximizing planar rotation in a fixed time-interval.
-              </li>
-            </ul>
+          <div style="text-align: center; display: flex; align-items: center; justify-content: center;">
+            <figure>
+              <img src="media/robots/blokky.png" alt="blokky" style="margin-left: 3%; margin-right: 3%; width: 90%;">
+              <figcaption>Blokky</figcaption>
+            </figure>
+            <figure>
+              <img src="media/robots/salamander.png" alt="salamander" style="margin-left: 3%; margin-right: 3%; width: 90%;">
+              <figcaption>Salamander</figcaption>
+            </figure>
+            <figure>
+              <img src="media/robots/stingray.png" alt="stingray" style="margin-left: 3%; margin-right: 3%; width: 90%;">
+              <figcaption>Stingray</figcaption>
+            </figure>
           </div>
+        </div>
 
-          <div style="text-align: justify; margin-bottom: 20px;">
-            <h2 id="Methodology">How it works</h2><hr>
-            <p style="font-size: 20px; text-indent: 4%">
-              CPGs are pairs of artificial neurons that reciprocally inhibit and excite each other to produce oscillatory behaviour, and can be described mathematically as a set of Ordinary Differential Equations as shown below.
-              Originally, CPGs were used to describe the behaviour of groups of neuron responsible for generating locomotion patterns found in the spinal cords of several animals.
-              In the last decade, CPGs have become increasingly more popular in robotics as a form of bio-inspired control due to their functional smoothness and cyclical behaviour.
-            </p>
-          </div>
-          <div style="text-align: center; margin-bottom: 50px;">
-              <img src="media/CPG.svg" width="10%" alt="single cpg" style="margin-left: 3%; margin-right: 3%;">
-              \(
-            \Large\begin{align}
-            % \begin{split}
-                &\dot{x} = w_{yx}y \\
-                &\dot{y} = w_{xy}x \\
-            % \end{split}
-              \end{align}
-            \hspace{2em}
-            \begin{split}
-                    \begin{bmatrix}
-                    \dot{x}\\
-                    \dot{y}\\
-                    \end{bmatrix} & = \begin{bmatrix}
-                    0 & w_{yx} \\
-                    w_{xy} & 0 \\
-                    \end{bmatrix} \begin{bmatrix}
-                    x\\
-                    y\\
-                    \end{bmatrix}
-            \end{split}
-            \)
-          </div>
-          <div style="text-align: justify; margin-bottom: 50px; display: flex; align-items: center; justify-content: center;">
-            <p style="font-size: 20px; text-indent: 4%">
-              We create a network of CPGs by coupling several oscillators with each other, based on the morphological design of a modular robot (depicted below as a blueprint).
-              Here, each servomotor gets assigned a single CPG-oscillator that is subsequently linked to its neighbours, according to their modular-based distance as shown below.
-              The final CPG-network is able to produce more complex signals which are correlated with neighbouring oscillators.
-              The state-value of each \(x\)-neuron is sent as a position command to the corresponding robot's joints
-            </p>
-          </div>
-          <div style="text-align: center; margin-bottom: 20px;">
-              <img src="media/gecko_blueprint.png" width="17.5%" alt="gecko blueprint" style="margin-left: 3%; margin-right: 3%;">
-              <img src="media/gecko_blueprint_cpg2.png" width="20%" alt="gecko blueprint cpg" style="margin-left: 3%; margin-right: 3%;">
-              <img src="media/CPG-network_clean.svg" width="30%" alt="cpg network" style="margin-left: 3%; margin-right: 3%; margin-bottom: 40px;">
-            <p style="text-align: justify; font-size: 20px; text-indent: 4%; margin-bottom: 40px;">
-              Although some details may vary, our work shows that in essence the oscillatory behaviour within the CPG-network is invariably defined in terms of the connectivity between neurons and their initial state.
-              As a result we can identify two modes of optimisation: 1) Weight optimisation (WO), which is a standard way of optimizing CPGs; and 2) Initial State optimisation (ISO), which (to our knowledge) has never been investigated.
-              Our paper provides a thorough insight to the difference between WO and ISO and their mathematical properties.
-              Here, we provide a quick insight to develop enough intuition to understand why ISO works.
-            </p>
-          </div>
+        <div style="text-align: justify; margin-bottom: 20px;">
+          <h2 id="Methodology">How it works</h2><hr>
+          <p style="font-size: 16px; text-indent: 4%">
+            CPGs are pairs of artificial neurons that reciprocally inhibit and excite each other to produce oscillatory behaviour, and can be described mathematically as a set of Ordinary Differential Equations as shown below.
+            Originally, CPGs were used to describe the behaviour of groups of neuron responsible for generating locomotion patterns found in the spinal cords of several animals.
+            In the last decade, CPGs have become increasingly more popular in robotics as a form of bio-inspired control due to their functional smoothness and cyclical behaviour.
+          </p>
+        </div>
+        <div style="text-align: center; margin-bottom: 50px; font-size: 80%">
+            <img src="media/CPG.svg" width="10%" alt="single cpg" style="margin-left: 3%; margin-right: 3%; min-width: 75px;">
+            \(
+          \Large\begin{align}
+          % \begin{split}
+              &\dot{x} = w_{yx}y \\
+              &\dot{y} = w_{xy}x \\
+          % \end{split}
+            \end{align}
+          \hspace{2em}
+          \begin{split}
+                  \begin{bmatrix}
+                  \dot{x}\\
+                  \dot{y}\\
+                  \end{bmatrix} & = \begin{bmatrix}
+                  0 & w_{yx} \\
+                  w_{xy} & 0 \\
+                  \end{bmatrix} \begin{bmatrix}
+                  x\\
+                  y\\
+                  \end{bmatrix}
+          \end{split}
+          \)
+        </div>
+        <div style="text-align: justify; margin-bottom: 50px; display: flex; align-items: center; justify-content: center;">
+          <p style="font-size: 16px; text-indent: 4%">
+            We create a network of CPGs by coupling several oscillators with each other, based on the morphological design of a modular robot (depicted below as a blueprint).
+            Here, each servomotor gets assigned a single CPG-oscillator that is subsequently linked to its neighbours, according to their modular-based distance as shown below.
+            The final CPG-network is able to produce more complex signals which are correlated with neighbouring oscillators.
+            The state-value of each \(x\)-neuron is sent as a position command to the corresponding robot's joints
+          </p>
+        </div>
+        <div style="text-align: center; margin-bottom: 20px;">
+            <img src="media/gecko_real.jpg" width="20%" alt="gecko blueprint" style="margin-left: 2%; margin-right: 3%;">
+            <img src="media/gecko_blueprint.png" width="20%" alt="gecko blueprint" style="margin-left: 3%; margin-right: 3%;">
+            <img src="media/gecko_blueprint_cpg2.png" width="22.5%" alt="gecko blueprint cpg" style="margin-left: 3%;"><br>
+            <img src="media/CPG-network_clean.svg" width="30%" alt="cpg network" style="margin-bottom: 40px;">
+          <p style="text-align: justify; font-size: 16px; text-indent: 4%; margin-bottom: 40px;">
+            Although some details may vary, our work shows that in essence the oscillatory behaviour within the CPG-network is invariably defined in terms of the connectivity between neurons and their initial state.
+            As a result we can identify two modes of optimisation: 1) Weight optimisation (WO), which is a standard way of optimizing CPGs; and 2) Initial State optimisation (ISO), which (to our knowledge) has never been investigated.
+            Our paper provides a thorough insight to the difference between WO and ISO and their mathematical properties.
+            Here, we provide a quick insight to develop enough intuition to understand why ISO works.
+          </p>
+        </div>
         <div style="text-align: center; margin-bottom: 20px;">
             <h3 id="Space state" >State-space</h3>
-            <p style="text-align: justify; font-size: 20px; text-indent: 4%">
+            <p style="text-align: justify; font-size: 16px; text-indent: 4%">
               If we look at the state-value of each neuron in our CPG-network, as time progresses, we can find (semi-)cyclical pattens emerge.
               Below, we map the state-value of two neurons on a 2D-plane to show the behaviour of the CPGs in their so-called 'state-space' (i.e. the bottom right plot).
               Keep in mind that the actual state-space of this particular CPG-network contains 12-dimensions, but for now 2-dimensions suffice for interpretation.
@@ -435,7 +473,7 @@
           <div style="margin-bottom: -3%; display: flex; align-items: center; justify-content: center;">
             <img src="media/CPG-network.svg" width="25%" alt="cpg-network">
             <br>
-            <video playsinline autoplay muted loop style="width: 20%; transform: rotate(90deg); margin-left: -3%; margin-right: 2%;">
+            <video playsinline autoplay muted loop style="width: 20%; transform: rotate(90deg); margin-left: -3%; margin-right: 2%; z-index: 1">
             <source src="media/neuron21.mp4" type="video/webm">
             </video>
             <br>
@@ -451,14 +489,14 @@
           </div>
           <br>
 
-          <p style="text-align: justify; font-size: 20px; text-indent: 4%">
+          <p style="text-align: justify; font-size: 16px; text-indent: 4%">
             The state-space trajectory is defined by the local derivatives of our CPG-network at any point in state-space.
             We can show this as a vector field in state-space, where each vector indicates the local derivative at the corresponding point in state-space.
             Now recall that the dynamics of the CPGs are solely defined by the weights in the network.
             This means that when we change the weights -as is done during WO- we are only changing the vector field in state-space, i.e. the local derivatives.
             A clear depiction of what happens when weights are changed is shown below.
           </p>
-         <div style="text-align: center; display: flex; justify-content: center; align-items: center; margin-bottom: 20px;">
+         <div style="text-align: center; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; font-size: 13px;">
             \(
               \begin{equation}
               \begin{split}
@@ -486,7 +524,7 @@
             \hspace{2em}
             \)
             <figure >
-              <img src="media/vectr_field_traj.svg" alt="cpg network" style="margin-left: 3%; margin-right: 3%; width: 100%">
+              <img src="media/vectr_field_traj.svg" alt="cpg network" style="margin-left: 3%; margin-right: 3%; width: 100%; min-width: 200px">
               <figcaption>Vector field in state-space with corresponding trajectory</figcaption>
             </figure>
           </div>
@@ -507,7 +545,7 @@
 
           <div style="text-align: center; margin-bottom: 20px;">
             <h3 id="ISO" >Initial State Optimisation</h3>
-            <p style="text-align: justify; font-size: 20px; text-indent: 4%">
+            <p style="text-align: justify; font-size: 16px; text-indent: 4%">
               WO changes network dynamics (i.e. the vector field in state-space) which in return re-defines the behaviour of the CPGs.
               ISO keeps the network dynamics the same, meaning we freeze the weights of the CPGs and optimises the initial start in state-space.
               Thus, in ISO the vector field remains the same, but we search for optimal CPG behaviour by testing different initial states.
@@ -518,10 +556,10 @@
           <div style="text-align: center; display: inline-block; justify-content: center; align-items: center; width: 100%;">
             <figure style="z-index: 2; display: inline-block;">
               <figcaption>Initial state sampling in state-space</figcaption>
-              <img src="media/ISO_samples.svg" alt="cpg network" style="width: 87%;">
+              <img src="media/ISO_samples.svg" alt="cpg network" style="width: 84%;">
             </figure>
           </div>
-          <div style="text-align: center; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; margin-top: -10%">
+          <div style="text-align: center; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; margin-top: -10%; ">
             <figure style="z-index: -1;">
               <img src="media/initial1_traj.svg" alt="ISO1" style="margin-left: 3%; margin-right: 3%; width: 80%;">
               <figcaption>Initial State 1</figcaption>
@@ -536,7 +574,7 @@
             </figure>
           </div>
           <div style="text-align: center;">
-            <p style="text-align: justify; font-size: 20px; text-indent: 4%;  margin-bottom: 30px;">
+            <p style="text-align: justify; font-size: 16px; text-indent: 4%;  margin-bottom: 30px;">
               Now we load our CPG-network on the real robot, where we test our sampled initial state.
               During a single trial, we save the intermediate states of the network (\(\mathcal{S}\)).
               In addition, an overhead system tracks the movement of our robot in the real world to collect position and orientation data (\(\mathcal{D}\)).
@@ -549,19 +587,19 @@
           </div>
           <div style="text-align: center;">
             <h3 id="B&P" >Bootstrapping and Parallelization</h3>
-            <p style="text-align: justify; font-size: 20px; text-indent: 4%;  margin-bottom: 10px;">
+            <p style="text-align: justify; font-size: 16px; text-indent: 4%;  margin-bottom: 10px;">
               ISO optimisation approaches the CPG-network as a reservoir of behaviours encoded by frozen weights.
               This means that optimisation <span style="text-decoration: underline;">does not affect</span> the network dynamics (the vector field remains the same).
               We can use this to our advantage with the following two tricks:
             </p>
             <ul>
-              <li style="text-align: justify; font-size: 20px; margin-left: 5%;  margin-bottom: 10px;">
+              <li style="text-align: justify; font-size: 16px; margin-left: 5%;  margin-bottom: 10px;">
                 <b class="term">Bootstrapping</b>: The intermediate CPG-network states from \(\mathcal{S}\) can be considered as additional possible initial state samples.
                 This increases the amount of samples that we get \(N\) times, we assess the performance of a state at each time-step instead of assessing only one.
                 The longer a trial lasts, the more bootstrapped samples we obtain.
 
               </li>
-              <li style="text-align: justify; font-size: 20px; margin-left: 5%;  margin-bottom: 20px;">
+              <li style="text-align: justify; font-size: 16px; margin-left: 5%;  margin-bottom: 20px;">
                 <b class="term">Parallelization</b>: The behavioural performance can be assessed on \(\mathcal{D}\) for multiple skills at once, instead of evaluating a single skill metric.
                 Optimization of specific skills do not interfere when the dynamics of the CPG-network are frozen.
                 This allows information to flow between learning tasks as can extract usefull information among all skills at once.
@@ -577,26 +615,40 @@
           </div>
 
           <div style="text-align: center;">
-            <p style="text-align: justify; font-size: 20px; text-indent: 4%;  margin-bottom: 30px;">
+            <p style="text-align: justify; font-size: 16px; text-indent: 4%;  margin-bottom: 30px;">
               A trade-off can be made between testing longer to obtain more bootstrapped samples, or sampling different regions in state spce with another trial.
               In our work, we choose to test 5 different regions for two minutes each (10 minutes in total) using random search.
               In the end, we select the best overall (intermediate) initial state sample for each skill.
             </p>
           </div>
 
-          <div style="text-align: center; display: inline-block; justify-content: center; align-items: center; width: 100%;">
+          <div style="text-align: center; display: inline-block; justify-content: center; align-items: center; width: 100%; margin-bottom: 20px;">
             <figure style="display: inline-block;">
               <figcaption>Final skills encoded in the network:</figcaption>
               <img src="media/final_skills.svg" alt="alg" style="width: 60%">
             </figure>
           </div>
 
-<!--          <div style="text-align: justify; margin-bottom: 20px;">-->
+          <div style="text-align: justify; margin-bottom: 20px;">
 <!--            <h2 id="Results">Results</h2>-->
-<!--            <p style="font-size: 20px; text-indent: 4%">-->
-<!--              ISO has -->
-<!--            </p>-->
-<!--          </div>-->
+            <p style="font-size: 16px; text-indent: 4%">
+              In the end, we re-test our best initial states [\(s^*_{⟲}\), \(s^*_{→}\), \(s^*_{⟳}\)] on our robots to measure our Initial State Optimization algorithm's final performance. The resulting behaviours are shown below.
+            </p>
+            <div style="text-align: center; display: flex; justify-content: center; align-items: center;">
+            <figure>
+                <figcaption style="font-size: 40px">⟲</figcaption>
+                <img src="media/final_frames/anti-clockwise.jpeg" alt="final_anti_clockwise" style="margin-left: 3%; margin-right: 3%; width: 90%;">
+            </figure>
+            <figure>
+                <figcaption style="font-size: 40px">→</figcaption>
+                <img src="media/final_frames/gait.jpeg" alt="final_gait" style="margin-left: 3%; margin-right: 3%; width: 90%;">
+            </figure>
+            <figure>
+                <figcaption style="font-size: 40px">⟳</figcaption>
+                <img src="media/final_frames/clockwise.jpeg" alt="final_clockwise" style="margin-left: 3%; margin-right: 3%; width: 90%;">
+            </figure>
+          </div>
+          </div>
 
 
 
