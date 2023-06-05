@@ -5,20 +5,21 @@ from numpy.random import default_rng
 
 rng = default_rng()
 rvs = stats.uniform(-1, 2).rvs
-# import
+
 
 def RK45(state, A, dt):
     A1 = np.matmul(A, state)
-    A2 = np.matmul(A , (state + dt / 2 * A1))
-    A3 = np.matmul(A , (state + dt / 2 * A2))
-    A4 = np.matmul(A , (state + dt * A3))
-    return state +dt / 6 * (A1 + 2 * (A2 + A3) + A4)
+    A2 = np.matmul(A, (state + dt / 2 * A1))
+    A3 = np.matmul(A, (state + dt / 2 * A2))
+    A4 = np.matmul(A, (state + dt * A3))
+    return state + dt / 6 * (A1 + 2 * (A2 + A3) + A4)
+
 
 def rand_CPG_network(num_dofs, inter_con_density: float = 0.5):
     inter_connection = np.triu(random(num_dofs, num_dofs, density=inter_con_density,
                                       random_state=rng, data_rvs=rvs).A, 1)
     oscillator_connection = random(1, num_dofs, density=1,
-                                      random_state=rng, data_rvs=rvs).A
+                                   random_state=rng, data_rvs=rvs).A
     oscillator_connection = np.insert(oscillator_connection, range(1, num_dofs), 0)
     weight_matrix = np.diag(oscillator_connection, 1)
     weight_matrix[::2, ::2] = inter_connection
@@ -30,11 +31,11 @@ class CPG_network():
     def __init__(self, weights, dt):
         self.dt = dt
         self.n_weights = len(weights)
-        self.state_shape = (self.n_weights*2, int(1))
+        self.state_shape = (self.n_weights * 2, int(1))
         weights_A = np.insert(weights, range(1, self.n_weights), 0)
         wx_wy = np.diag(weights_A, 1)
         wy_wx = np.diag(-weights_A, -1)
-        self.A = wx_wy+wy_wx
+        self.A = wx_wy + wy_wx
         self.weight_map = np.nonzero(np.triu(self.A))
         self.weights = self.A[np.nonzero(np.triu(self.A))]
         self.initial_state = np.ones(self.state_shape) * np.sqrt(2) / 2
