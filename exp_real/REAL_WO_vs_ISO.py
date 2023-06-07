@@ -1,21 +1,31 @@
+import os
+import sys
+sys.path.extend([os.getcwd()])
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+
+from ISO import configuration_file
 from utils.utils import search_file_list, robot_names
 
 
-def generate_data():
+def generate_data_iso():
+    params = configuration_file
+    reps = params['n_reps']
+    n_trials = params['n_trials']
+    trial_time = params['trial_time']
     for robot in robot_names:
-        os.system(f'./exp_sim/WO.py --robot {robot}')
-    for robot in robot_names:
-        os.system(f'./exp_sim/ISO.py --robot {robot}')
+        os.system(f'./exp_real/ISO.py --robot {robot}')
+        for rep in reps:
+            results_dir = f'./{params["results_dir"]}/{robot}/{robot}_n{n_trials}_{trial_time}.{rep}'
+            os.system(f'./exp_real/retest_CPG.py -dir {results_dir}')
 
 
 if __name__ == "__main__":
     # %% Generate data
-    generate_data()
+    generate_data_iso()
 
-    results_dir = './results/SIM/'
+    results_dir = './results/REAL/'
 
     # %% Data Analysis
     exp_name = ['ISO', 'WO']

@@ -7,13 +7,20 @@ How to use:
     From the root directory you can run from terminal
     python ./exp_real/retest_CPG.py -dir <path/to/retest_dir>
 """
+import os
+import sys
+sys.path.extend([os.getcwd()])
 import gc
+from typing import Dict
+
 import numpy as np
 import argparse
 from revolve2.core.modular_robot import ModularRobot
 
 from revolve2.core.modular_robot.brains import make_cpg_network_structure_neighbour as mkcpg, \
     BrainCpgNetworkNeighbourRandom
+
+from ISO import configuration_file
 from thirdparty.mss.src.Experiments import MotionCapture
 from thirdparty.mss.src.Experiments.Controllers import CPG
 from thirdparty.mss.src.Experiments.Fitnesses import real_abs_dist, signed_rot
@@ -24,38 +31,35 @@ from thirdparty.revolve2.standard_resources.revolve2.standard_resources import m
 import logging
 from revolve2.core.rpi_controller_remote import connect
 
+from utils.utils import robot_names, optim_types, skill_set
 
 argParser = argparse.ArgumentParser()
-argParser.add_argument("-dir", "--directory", help="path to robot folder to be retested")
+argParser.add_argument("-d", "--dir", help="path to robot folder to be retested")
 
-robot_names = ['ant', 'gecko', 'spider', 'blokky', 'salamander', 'stingray']
-optim_types = ['WO', 'ISO']
 
-async def main(args) -> None:
-    exp_dir = args.directory
-    robot_name = [robot for robot in robot_names if robot in exp_dir][0]
-    opt_type = [optim_type for optim_type in optim_types if optim_type in exp_dir][0]
-    run_time = 60
-    skills = ['gait', 'left', 'right']
-    show_stream = False
-    hat_version = "v1"
+async def main(params, args) -> None:
+    results_dir = args.dir
+    robot_name = [robot for robot in robot_names if robot in results_dir][0]
+    opt_type = [optim_type for optim_type in optim_types if optim_type in results_dir][0]
+    skills = params['skills']
+    trial_time = params['window_time']
+    show_stream = params['show_stream']
+    hat_version = params['hat_version']
     body = modular_robots.get(robot_name)
     show_grid_map(body, robot_name, hat_version)
+    robot_ip = np.loadtxt(f"./thirdparty/mss/secret/{robot_name}_ip.txt")
 
     if opt_type == 'ISO':
-        run = 'n5_120.0'
-        results_dir = f'./results/REAL/{opt_type}/{robot_name}/{robot_name}_{run}'
-        weight_mat = np.load(f'{exp_dir}/weight_mat.npy', allow_pickle=True)
+        weight_mat = np.load(f'{results_dir}/weight_mat.npy', allow_pickle=True)
         weight_mats = np.array([weight_mat, weight_mat, weight_mat, ])
-        f = np.load(f'{exp_dir}/fitness_full.npy', allow_pickle=True)
-        x = np.load(f'{exp_dir}/x_full.npy', allow_pickle=True)
+        f = np.load(f'{results_dir}/fitness_full.npy', allow_pickle=True)
+        x = np.load(f'{results_dir}/x_full.npy', allow_pickle=True)
 
         init_idx = np.nanargmax(f, axis=0)
         print("expected fitnesses: \n",
               f[init_idx])
         initial_state = x[init_idx, :]
     elif opt_type == 'WO':
-        results_dir = f'./results/REAL/{opt_type}/{robot_name}/transfer_weights/'
         _, dof_ids = body.to_actor()
         from random import Random
         rng = Random()
@@ -70,7 +74,7 @@ async def main(args) -> None:
         genomes = []
         weight_mats = []
         for skill in skills:
-            genome = np.loadtxt(f'{exp_dir}/weights_{skill}.txt', delimiter=', ')
+            genome = np.loadtxt(f'{results_dir}/weights_{skill}.txt', delimiter=', ')
             weight_mats.append(network_struct.make_connection_weights_matrix_from_params(genome))
             genomes.append(controller._state)
         initial_state = np.array(genomes)
@@ -84,11 +88,13 @@ async def main(args) -> None:
         format="[%(asctime)s] [%(levelname)s] [%(module)s] %(message)s",
     )
 
-    async with connect("10.15.2.155", "pi", "raspberry") as conn:
+    async with connect(robot_ip, "pi", "raspberry") as conn:
         print(f"Connection made with {robot_name}")
-        with open("./secret/cam_paths.txt", "r") as file:
+        with open("./thirdparty/mss/secret/cam_paths.txt", "r") as file:
             paths = file.read().splitlines()
-        for ind in range( 2, initial_state.shape[0]):
+
+        skill_ind = [ind for ind, skill in enumerate(skill_set) if skill in skills]
+        for ind in skill_ind:
             experiment = ExperimentStream.ExperimentStream(paths, show_stream=show_stream,
                                                            output_dir=results_dir)
             print(f"Test {results_dir} brain: skill {skills[ind]}")
@@ -100,7 +106,7 @@ async def main(args) -> None:
             capture = MotionCapture.MotionCaptureRobot(f'{robot_name}_{skills[ind]}', ["red", "green"],
                                                        return_img=show_stream)
             experiment.start_experiment([capture.store_img])
-            robot_controller = asyncio.create_task(conn.run_controller(config, run_time))
+            robot_controller = asyncio.create_task(conn.run_controller(config, trial_time))
             experiment_run = asyncio.create_task(experiment.stream())
             tasks = [experiment_run, robot_controller]
             # time.sleep(0.1)
@@ -126,18 +132,18 @@ async def main(args) -> None:
 
             capture_t = np.array(capture.t) - start_time.timestamp()
             capture_state = capture.robot_states
-            capture_state = capture_state[(0 < capture_t) & (capture_t <= run_time), :]
-            capture_t = capture_t[(0 < capture_t) & (capture_t <= run_time)]
+            capture_state = capture_state[(0 < capture_t) & (capture_t <= trial_time), :]
+            capture_t = capture_t[(0 < capture_t) & (capture_t <= trial_time)]
 
             control_t = (t_con.flatten() - t_con[0, 0]) / 1000
             index = find_closest(control_t, capture_t)
             control_state = state_con[index]
 
-            index = capture_t < run_time
+            index = capture_t < trial_time
 
             f_dist = real_abs_dist(capture_state[:, :2]).squeeze()
-            f_angle2 = signed_rot(capture_state[:, 2:])
-            fitnesses = np.array([f_dist, f_angle2, -f_angle2])
+            f_angle = signed_rot(capture_state[:, 2:])
+            fitnesses = np.array([f_dist, f_angle, -f_angle])
             print(f'Retest for {skills[ind]}:\n'
                   f'Fitnesses: {fitnesses}\n')
 
@@ -156,7 +162,8 @@ async def main(args) -> None:
 if __name__ == "__main__":
     import asyncio
     args = argParser.parse_args()
-    if args.__contains__('--dir'):
-        asyncio.run(main(args))
+    parameters = configuration_file
+    if args.__contains__('dir'):
+        asyncio.run(main(parameters, args))
     else:
         print("ERROR must provide directory argument: --dir")
