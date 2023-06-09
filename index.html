@@ -233,7 +233,7 @@
           </dd>
           <dd style="border-left: 1px solid; color: #8c8484; padding-left: 1%;">
           <div class="date">
-            <div class="year" style="color: #8c8484;"><a href="https://www.youtube.com/@fudaprojectschannel419" target="_blank" style="color: #8c8484">YouTube<br>Video</a>
+            <div class="year" style="color: #8c8484;"><a href="https://youtu.be/pwL3eTEQui8" target="_blank" style="color: #8c8484">YouTube<br>Video</a>
             </div>
           </div>
           </dd>
@@ -326,7 +326,7 @@
           <dd style="border-left: 1px solid; color: #8c8484; padding-left: 1%;">
           <div class="date">
             <div class="month" style="color: #8c8484">YouTube</div>
-            <div class="year" style="color: #8c8484;"><a href="https://www.youtube.com/@fudaprojectschannel419" target="_blank" style="color: #8c8484">Video</a>
+            <div class="year" style="color: #8c8484;"><a href="https://youtu.be/pwL3eTEQui8" target="_blank" style="color: #8c8484">Video</a>
             </div>
           </div>
           </dd>
@@ -335,8 +335,8 @@
       </div>
       <br><br><br><br>
       <div style="text-align: center;align-items: center;">
-          <b class="term" style="font-size: 30px; margin-bottom: 10px;">
-            Three Locomotion skills were learned in parallel under 15 minutes in the real world.
+          <b style="font-size: 30px; margin-bottom: 10px;">
+            Three locomotion skills were learned in parallel under 15 minutes in the real world.
           </b>
       </div>
       <div>
@@ -372,7 +372,7 @@
               <b class="term">Gait (→)</b>: Maximizing planar displacement from starting position in a fixed time-interval
             </li>
             <li style="text-align: justify; font-size: 16px; margin-left: 2%;">
-              <b class="term">Clockwise-</b> and <b class="term">anti-Clockwise Rotation (⟳/⟲)</b>: Maximizing planar rotation in a fixed time-interval.
+              <b class="term">Clockwise-</b> and <b class="term">Anti-clockwise Rotation (⟳/⟲)</b>: Maximizing planar rotation in a fixed time-interval.
             </li>
           </ul>
         </div>
@@ -462,8 +462,8 @@
             Here, we provide a quick insight to develop enough intuition to understand why ISO works.
           </p>
         </div>
-        <div style="text-align: center; margin-bottom: 20px;">
-            <h3 id="Space state" >State-space</h3>
+        <div style="margin-bottom: 20px; margin-top: 40px;">
+            <h3 id="Space state" >State-space</h3><hr>
             <p style="text-align: justify; font-size: 16px; text-indent: 4%">
               If we look at the state-value of each neuron in our CPG-network, as time progresses, we can find (semi-)cyclical pattens emerge.
               Below, we map the state-value of two neurons on a 2D-plane to show the behaviour of the CPGs in their so-called 'state-space' (i.e. the bottom right plot).
@@ -524,7 +524,7 @@
             \hspace{2em}
             \)
             <figure >
-              <img src="media/vectr_field_traj.svg" alt="cpg network" style="margin-left: 3%; margin-right: 3%; width: 100%; min-width: 200px">
+              <img src="media/vector_field_traj.svg" alt="cpg network" style="margin-left: 3%; margin-right: 3%; width: 100%; min-width: 200px">
               <figcaption>Vector field in state-space with corresponding trajectory</figcaption>
             </figure>
           </div>
@@ -543,8 +543,8 @@
             </figure>
           </div>
 
-          <div style="text-align: center; margin-bottom: 20px;">
-            <h3 id="ISO" >Initial State Optimisation</h3>
+          <div style="margin-top: 40px; margin-bottom: 20px;">
+            <h3 id="ISO" >Initial State Optimisation</h3><hr>
             <p style="text-align: justify; font-size: 16px; text-indent: 4%">
               WO changes network dynamics (i.e. the vector field in state-space) which in return re-defines the behaviour of the CPGs.
               ISO keeps the network dynamics the same, meaning we freeze the weights of the CPGs and optimises the initial start in state-space.
@@ -585,8 +585,8 @@
             <img src="media/record_states.svg" alt="record_states" style="margin-left: 3%; margin-right: 3%; width: 40%;">
             <img src="media/record_robot.svg" alt="record_robot" style="margin-left: 3%; margin-right: 3%; width: 40%; margin-top: -2%;">
           </div>
-          <div style="text-align: center;">
-            <h3 id="B&P" >Bootstrapping and Parallelization</h3>
+          <div style="margin-top: 40px; margin-bottom: 20px">
+            <h3 id="B&P" >Bootstrapping and Parallelization</h3><hr>
             <p style="text-align: justify; font-size: 16px; text-indent: 4%;  margin-bottom: 10px;">
               ISO optimisation approaches the CPG-network as a reservoir of behaviours encoded by frozen weights.
               This means that optimisation <span style="text-decoration: underline;">does not affect</span> the network dynamics (the vector field remains the same).
@@ -606,7 +606,7 @@
               </li>
             </ul>
           </div>
-          <div style="display: flex; align-items: center; justify-content: center;">
+          <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
             <img src="media/2tricks.svg" alt="2tricks" style="margin-left: 3%; margin-right: 3%; width: 30%;">
             <figure style="margin-left: 3%; margin-right: 5%; align-items: center; justify-content: center; width: 20%;">
               <figcaption style="font-family: monospace; font-size: 100%">Trial fitness:</figcaption>
@@ -614,25 +614,25 @@
             </figure>
           </div>
 
-          <div style="text-align: center;">
+          <div style="text-align: center; margin-bottom: 40px;">
             <p style="text-align: justify; font-size: 16px; text-indent: 4%;  margin-bottom: 30px;">
               A trade-off can be made between testing longer to obtain more bootstrapped samples, or sampling different regions in state spce with another trial.
               In our work, we choose to test 5 different regions for two minutes each (10 minutes in total) using random search.
-              In the end, we select the best overall (intermediate) initial state sample for each skill.
+              In the end, we select the best overall (intermediate) initial state sample for each skill (denoted as [\(s^*_{⟲}\), \(s^*_{→}\), \(s^*_{⟳}\)]).
             </p>
           </div>
 
           <div style="text-align: center; display: inline-block; justify-content: center; align-items: center; width: 100%; margin-bottom: 20px;">
             <figure style="display: inline-block;">
               <figcaption>Final skills encoded in the network:</figcaption>
-              <img src="media/final_skills.svg" alt="alg" style="width: 60%">
+              <img src="media/final_skills.svg" alt="alg" style="width: 80%">
             </figure>
           </div>
 
-          <div style="text-align: justify; margin-bottom: 20px;">
+          <div style="text-align: justify; margin-bottom: 20px; margin-top: 40px">
 <!--            <h2 id="Results">Results</h2>-->
             <p style="font-size: 16px; text-indent: 4%">
-              In the end, we re-test our best initial states [\(s^*_{⟲}\), \(s^*_{→}\), \(s^*_{⟳}\)] on our robots to measure our Initial State Optimization algorithm's final performance. The resulting behaviours are shown below.
+              In the end, we re-test our best initial states [\(s^*_{⟲}\), \(s^*_{→}\), \(s^*_{⟳}\)] to measure the performance of our ISO algorithm's final skills. The resulting behaviours are shown below.
             </p>
             <div style="text-align: center; display: flex; justify-content: center; align-items: center;">
             <figure>
