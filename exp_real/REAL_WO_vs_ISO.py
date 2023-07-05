@@ -4,6 +4,7 @@ sys.path.extend([os.getcwd()])
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+import shutil
 
 from ISO import configuration_file
 from utils.utils import search_file_list, robot_names
@@ -16,14 +17,26 @@ def generate_data_iso():
     trial_time = params['trial_time']
     for robot in robot_names:
         os.system(f'./exp_real/ISO.py --robot {robot}')
-        for rep in reps:
-            results_dir = f'./{params["results_dir"]}/{robot}/{robot}_n{n_trials}_{trial_time}.{rep}'
-            os.system(f'./exp_real/retest_CPG.py -dir {results_dir}')
+        for rep in range(reps):
+            results_dir = f'{params["results_dir"]}/{robot}/{robot}_n{n_trials}_{trial_time}.{rep}'
+            os.system(f'python ./exp_real/retest_CPG.py --dir "{results_dir}"')
+
+
+def generate_data_wo():
+    for robot in robot_names:
+        results_dir = f'./results/REAL/WO/{robot}'
+        os.makedirs(results_dir)
+        for root, dirs, files in os.walk(f'./exp_real/WO/{robot}'):
+            for file in files:
+                print(os.path.join(root, file))
+                shutil.copy(os.path.join(root, file), results_dir)
+        os.system(f'python ./exp_real/retest_CPG.py --dir "{results_dir}"')
 
 
 if __name__ == "__main__":
     # %% Generate data
     generate_data_iso()
+    generate_data_wo()
 
     results_dir = './results/REAL/'
 

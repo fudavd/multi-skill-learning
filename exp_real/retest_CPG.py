@@ -166,4 +166,4 @@ if __name__ == "__main__":
     if args.__contains__('dir'):
         asyncio.run(main(parameters, args))
     else:
-        print("ERROR must provide directory argument: --dir")
+        print('ERROR must provide directory argument: --dir "<path/to/retested/results>"')
