@@ -1,5 +1,6 @@
-.idea
+**/.idea
 /.venv
+**/__pycache__
 /experiment_data/*
 
 # DO NOT INCLUDE SENSITIVE INFORMATION
