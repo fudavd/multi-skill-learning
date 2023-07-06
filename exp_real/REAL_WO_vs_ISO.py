@@ -94,6 +94,6 @@ if __name__ == "__main__":
 
             print(f[:, ii].mean().__round__(3), rob_max_real.__round__(3))
         figure.tight_layout()
-        # figure.savefig(f"{name}_real.pdf")
-        figure.show()
+        figure.savefig(f"{name}_real.pdf")
+        # figure.show()
         plt.close(figure)
