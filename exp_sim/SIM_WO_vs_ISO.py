@@ -6,25 +6,26 @@ from utils.utils import search_file_list, robot_names
 
 def generate_data():
     for robot in robot_names:
-        os.system(f'./exp_sim/WO.py --robot {robot}')
+        os.system(f'python {os.path.join("exp_real", "WO.py")} --robot {robot}')
     for robot in robot_names:
-        os.system(f'./exp_sim/ISO.py --robot {robot}')
+        os.system(f'python {os.path.join("exp_real", "ISO.py")} --robot {robot}')
 
 
 if __name__ == "__main__":
     # %% Generate data
     generate_data()
 
-    results_dir = './results/SIM/'
+    results_dir = os.path.join('results', 'SIM/')
 
     # %% Data Analysis
     exp_name = ['ISO', 'WO']
     DATA = []
     figure, ax = plt.subplots()
     for experiment in exp_name:
-        filenames_f = search_file_list(f'./{results_dir}/{experiment}', 'f_best.npy')
-        filenames_x_best = search_file_list(f'./{results_dir}/{experiment}', 'x_best.npy')
-        filenames_x_init = search_file_list(f'./{results_dir}/{experiment}', 'genomes.npy')
+        exp_dir = os.path.join(results_dir, experiment)
+        filenames_f = search_file_list(exp_dir, 'f_best.npy')
+        filenames_x_best = search_file_list(exp_dir, 'x_best.npy')
+        filenames_x_init = search_file_list(exp_dir, 'genomes.npy')
         combined_data = np.array([np.load(fname) for fname in filenames_f])
         x_best_data = np.array([np.load(fname) for fname in filenames_x_best])
         f_mean = combined_data.mean(axis=0)
@@ -43,4 +44,4 @@ if __name__ == "__main__":
     ax.legend()
     figure.tight_layout()
     # figure.set_size_inches(15, 9)
-    figure.savefig(f"{results_dir}/APP_curve.pdf", bbox_inches='tight')
+    figure.savefig(os.path.join(results_dir, "APP_curve.pdf"), bbox_inches='tight')
