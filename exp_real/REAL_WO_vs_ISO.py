@@ -44,8 +44,12 @@ if __name__ == "__main__":
     results_dir = os.path.join('results', 'REAL')
     if not os.path.exists(f'{results_dir}/WO/stingray/stingray_right/fitnesses_trial.npy'):
         generate_data_wo(results_dir)
+    else:
+        print("WO DATA already generated, continue ISO experiment")
     if not os.path.exists(f'{results_dir}/ISO/stingray/stingray_n5_120.2/stingray_right/fitnesses_trial.npy'):
         generate_data_iso(results_dir)
+    else:
+        print("ISO DATA already generated, continue analysis")
 
     # %% Data Analysis
     max_dict_real = {}
@@ -76,7 +80,8 @@ if __name__ == "__main__":
         f /= np.array([skill_vel_norm, skill_vel_norm, skill_vel_norm])
         sum_rank = np.sum(ranks, axis=0)
         norm_bars, best_bar = np.delete(f, sum_rank.argmax(), axis=0), f[sum_rank.argmax(), :]
-        print(name, sum_rank.argmax())
+        print(name, f'best ISO run:', sum_rank.argmax() + 1)
+        print(" ISO \t WO*")
         f_ranked = np.vstack((norm_bars, best_bar))
         f = f_ranked
         for ii, skill in enumerate(skills):
@@ -92,8 +97,9 @@ if __name__ == "__main__":
             ax[ii].set_xticks([0, 1, 2, 3.5,], ['ISO 1', 'ISO 2', 'ISO 3', 'WO* trans'])
             ax[ii].set_ylabel('cm/s' if skill == 'gait' else 'rad/s')
 
-            print(f[:, ii].mean().__round__(3), rob_max_real.__round__(3))
+            print(f'{f[:, ii].mean().__round__(3)}\t{rob_max_real.__round__(3)}')
         figure.tight_layout()
-        figure.savefig(f"{name}_real.pdf")
+        figure.savefig(f"{results_dir}/{name}_real.pdf")
         # figure.show()
         plt.close(figure)
+    print("FINISHED")

@@ -28,6 +28,8 @@ if __name__ == '__main__':
     n_oscillators = 10
     if not os.path.exists(f'{results_dir}/dist_1.0'):
         generate_data()
+    else:
+        print("DATA already generated, continue analysis")
 
     for ind, density in enumerate(ds):
         eig_vec = np.load(f'{results_dir}/dist_{density}.npy')
@@ -38,3 +40,4 @@ if __name__ == '__main__':
     plt.xticks(np.arange(-4, 5), ['-4$i$', '-3$i$', '-2$i$', '-1$i$', '0', '1$i$', '2$i$', '3$i$', '4$i$'], usetex=True)
     plt.savefig(f'{results_dir}/APP_freq_CPG.pdf')
     plt.show()
+    print("FINISHED")

@@ -72,6 +72,8 @@ if __name__ == "__main__":
     target_network.reset_controller()
     if not os.path.exists(f'{results_dir}/learner/{n_runs - 1}'):
         generate_data(results_dir, target_network, n_runs)
+    else:
+        print("DATA already generated, continue analysis")
 
     # %% Data Analysis
     weights_best = []
