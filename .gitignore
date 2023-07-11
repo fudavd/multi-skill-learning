@@ -10,7 +10,6 @@
 
 # DO NOT INCLUDE EXPERIMENT DATA
 **.npz
-**.npy
 **.pdf
 **.csv
 

@@ -7,8 +7,21 @@ import numpy as np
 import os
 import shutil
 
-from ISO import configuration_file
+from typing import Dict
 from utils.utils import robot_names
+
+
+configuration_file: Dict = {
+    'n_reps': 3,
+    'n_trials': 5,
+    'skills': ["gait", "rot_l", "rot_r"],
+    'results_dir': './results/REAL/ISO',
+    'robot': 'spider',
+    'show_stream': False,
+    'trial_time': 120,
+    'window_time': 60,
+    'hat_version': 'v1',
+}
 
 
 def generate_data_iso(results_dir):
