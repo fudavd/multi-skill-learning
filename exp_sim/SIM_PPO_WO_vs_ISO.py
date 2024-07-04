@@ -13,10 +13,12 @@ matplotlib.rcParams['axes.prop_cycle'] = cycler(
 
 def generate_data():
     for robot in robot_names:
-        os.system(f'python {os.path.join("exp_sim", "WO.py")} --robot {robot}')
+        os.system(f'python {os.path.join("exp_sim", "PPO.py")} --robot {robot} --headless')
+    for robot in robot_names:
+        os.system(f'python {os.path.join("exp_sim", "WO.py")} --robot {robot} --headless')
     print("WO DATA generated, continue ISO experiment")
     for robot in robot_names:
-        os.system(f'python {os.path.join("exp_sim", "ISO.py")} --robot {robot}')
+        os.system(f'python {os.path.join("exp_sim", "ISO.py")} --robot {robot} --headless')
 
 
 if __name__ == "__main__":
@@ -28,7 +30,6 @@ if __name__ == "__main__":
         print("DATA already generated, continue analysis")
 
     # %% Data Analysis
-    exp_name = ['ISO', 'WO']
     DATA = []
     controller_update_time = 0.1
     eval_time = 180
@@ -49,8 +50,10 @@ if __name__ == "__main__":
         for ii, skill in enumerate(skills):
             folder_state0 = os.path.join(results_dir, 'ISO', name, skill)
             folder_weight = os.path.join(results_dir, 'WO', name, skill)
+            folder_ppo = os.path.join(results_dir, 'PPO', name, skill)
             state0_list = search_file_list(folder_state0, 'fitnesses.npy')
             weight_list = search_file_list(folder_weight, 'fitnesses.npy')
+            ppo_list = search_file_list(folder_ppo, 'eps_rewards.npy')
 
             fitness_max_s0 = []
             peakindex_s0 = []
@@ -91,10 +94,31 @@ if __name__ == "__main__":
                 fitness_max_we.append(fitness_max_temp)
                 peakindex_we.append(peakindex_temp)
 
+            fitness_max_ppo = []
+            peakindex_ppo = []
+            for fitness_ref in ppo_list:
+                fitness_temp = np.load(fitness_ref, allow_pickle=True)
+
+                temp_max = -np.inf
+                max_index = []
+                fitness_max_temp = []
+                peakindex_temp = []
+                for ind in range(300):
+                    curr_max = fitness_temp[ind]
+                    if temp_max < curr_max:
+                        temp_max = curr_max
+                        peakindex_temp.append(ind)
+                    fitness_max_temp.append(temp_max)
+
+                fitness_max_ppo.append(fitness_max_temp)
+                peakindex_ppo.append(peakindex_temp)
+
             fitness_mean_s0 = np.repeat(np.mean(fitness_max_s0, axis=0), 2)
             fitness_std_s0 = np.repeat(np.std(fitness_max_s0, axis=0), 2)
             fitness_mean_we = np.mean(fitness_max_we, axis=0)
             fitness_std_we = np.std(fitness_max_we, axis=0)
+            fitness_mean_ppo = np.mean(fitness_max_ppo, axis=0)
+            fitness_std_ppo = np.std(fitness_max_ppo, axis=0)
 
             fitness_amax_s0 = np.argmax(fitness_max_s0, axis=0)[-1]
             s0_best = state0_list[fitness_amax_s0]
@@ -105,6 +129,8 @@ if __name__ == "__main__":
             we_best = weight_list[fitness_amax_we].replace('fitnesses.npy', "x_best.npy")
             we_best_genome = np.load(we_best.replace('fitnesses.npy', "x_best.npy"), allow_pickle=True)[-1]
 
+            fitness_amax_ppo = np.argmax(fitness_max_ppo, axis=0)[-1]
+
             error_norm = np.sqrt(30)
             ax[ii].plot(np.arange(0, 300), fitness_mean_s0, label='state0')
             ax[ii].fill_between(np.arange(0, 300), fitness_mean_s0 - fitness_std_s0 / error_norm,
@@ -114,6 +140,11 @@ if __name__ == "__main__":
             ax[ii].plot(np.arange(0, 300), fitness_mean_we, label='weights')
             ax[ii].fill_between(np.arange(0, 300), fitness_mean_we - fitness_std_we / error_norm,
                                 fitness_mean_we + fitness_std_we / error_norm,
+                                alpha=.5)
+
+            ax[ii].plot(np.arange(0, 300), fitness_mean_ppo, label='PPO')
+            ax[ii].fill_between(np.arange(0, 300), fitness_mean_ppo - fitness_std_ppo / error_norm,
+                                fitness_mean_ppo + fitness_std_ppo / error_norm,
                                 alpha=.5)
             max_we.append(fitness_mean_we.max())
             max_s0.append(fitness_mean_s0.max())

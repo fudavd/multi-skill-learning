@@ -1,12 +1,13 @@
 import copy
+
+from scipy import stats
+
 from utils.CPG_network import rand_CPG_network, CPG_network
 from utils.Learners import DifferentialEvolution
-import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import os
 from utils.utils import search_file_list
-from cycler import cycler
 
 
 def fitness_wo(x, target_controller):
@@ -45,10 +46,12 @@ def generate_data_wo(results_dir, target_network, n_runs):
         print(f"Starting experiment WO: {ind}")
         x0 = np.random.uniform(-1, 1, (pop_size, target_network.n_weights))
         learner_res_dir = f'{results_dir}/WO/{ind}'
+        if os.path.exists(learner_res_dir + '/' + 'x_best.npy'):
+            print(f"Completed experiment n_skills WO: {ind}")
+            continue
         if not os.path.exists(learner_res_dir):
             os.makedirs(learner_res_dir, exist_ok=True)
         learner = DifferentialEvolution(x0, 1, 'revde', (-1, 1), params, output_dir=learner_res_dir)
-
         for gen in range(n_generations):
             fitnesses = []
             for x in learner.x_new:
@@ -86,22 +89,25 @@ def generate_data_iso(results_dir, target_network, n_runs):
         print(f"Starting experiment ISO: {ind}")
         x0 = np.random.uniform(-1, 1, (pop_size, n_network))
         learner_res_dir = f'{results_dir}/ISO/{ind}'
+        if os.path.exists(learner_res_dir + '/' + 'x_best.npy'):
+            print(f"Completed experiment ISO: {ind}")
+            continue
         if not os.path.exists(learner_res_dir):
             os.makedirs(learner_res_dir, exist_ok=True)
         learner = DifferentialEvolution(x0, 1, 'revde', (-1, 1), params, output_dir=learner_res_dir)
-        reservoir_A = []
-        for i in range(pop_size):  # Create random CPG reservoirs
-            weights = np.random.uniform(-1, 1, target_network.n_weights)
-            init_A = np.zeros_like(target_network.A)
-            init_A[target_network.weight_map] = weights
-            init_A -= init_A.T
-            reservoir_A.append(init_A)
-            np.save(f'{learner_res_dir}/weights.npy', init_A)
+
+        # Create random CPG reservoir
+        weights = np.random.uniform(-1, 1, target_network.n_weights)
+        init_A = np.zeros_like(target_network.A)
+        init_A[target_network.weight_map] = weights
+        init_A -= init_A.T
+        reservoir_A = init_A
+        np.save(f'{learner_res_dir}/weights.npy', init_A)
 
         for gen in range(n_generations):
             fitnesses = []
-            for ind, x in enumerate(learner.x_new):
-                fitness = fitness_iso((x, reservoir_A[ind]), target_network)
+            for x in learner.x_new:
+                fitness = fitness_iso((x, reservoir_A), target_network)
                 fitnesses.append(fitness)
             learner.f = np.array(fitnesses)
             learner.x = learner.x_new
@@ -144,26 +150,31 @@ if __name__ == "__main__":
     # %% Data Analysis
     exp_name = ['ISO', 'WO']
     DATA = []
-    figure, ax = plt.subplots()
+    final_pop_means = []
+    figure, ax = plt.subplots(figsize=(4, 3))
     for experiment in exp_name:
         filenames_f = search_file_list(f'./{results_dir}/{experiment}', 'f_best.npy')
         filenames_x_best = search_file_list(f'./{results_dir}/{experiment}', 'x_best.npy')
         filenames_x_init = search_file_list(f'./{results_dir}/{experiment}', 'genomes.npy')
-        combined_data = np.array([np.load(fname) / 16 for fname in filenames_f])
+        combined_data = np.array([np.load(fname) for fname in filenames_f])
         x_best_data = np.array([np.load(fname) for fname in filenames_x_best])
         f_mean = combined_data.mean(axis=0)
         SE95 = combined_data.std(axis=0) / np.sqrt(len(filenames_f)) * 1.96
         f_max = combined_data.max()
         f_min = combined_data.min()
         DATA.append((combined_data, SE95, f_max, f_min))
+        final_pop_means.append(combined_data[:, -1])
 
         ax.plot(f_mean, label=experiment)
         ax.fill_between(np.arange(0, len(f_mean)), f_mean - SE95, f_mean + SE95, alpha=.5)
 
-    ax.set_xlabel('Generations', size=16)
-    ax.set_ylabel('Mean absolute error', size=16)
+    ax.set_xlabel('Generations', size=10)
+    ax.set_ylabel('Mean absolute error', size=10)
     ax.grid()
     ax.legend()
     figure.tight_layout()
     figure.savefig(f"{results_dir}/APP_curve.pdf", bbox_inches='tight')
+    F, p = stats.ttest_ind(*final_pop_means)
+    print(F, p)
     print("FINISHED")
+

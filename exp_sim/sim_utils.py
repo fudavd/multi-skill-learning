@@ -18,10 +18,11 @@ def get_robot_state(gym, env, robot):
 def set_controller(robot: ModularRobot, genome, network_struct, genome_type):
     _, controller = robot.make_actor_and_controller()
     n_weights = network_struct.num_connections
+    n_states = network_struct.num_states
     if genome_type.__contains__('weights'):
         controller._weight_matrix = network_struct.make_connection_weights_matrix_from_params(genome[:n_weights])
     if genome_type.__contains__('states'):
-        controller._state = genome[-n_weights:]
+        controller._state = genome[-n_states:]
     return controller
 
 
@@ -48,6 +49,20 @@ def fitness(trajectory: np.array, type: AnyStr = "gait"):
     elif type == "rot_r":
         z_rot = np.unwrap(trajectory[-1, :], period=2.0 * np.pi)
         fitness_val = z_rot[0] - z_rot[-1]
+    elif type == "side_l":
+        z_rot = np.unwrap(trajectory[-1, :], period=2.0 * np.pi)
+        deviation = np.matmul(z_rot.T,z_rot)/len(z_rot)
+        side_dist = trajectory[0,-1] - original_pos[0]
+        forward_dist = trajectory[1,-1] - original_pos[1]
+        fitness_val = (side_dist-deviation - np.abs(forward_dist))*100
+    elif type == "side_r":
+        z_rot = np.unwrap(trajectory[-1, :], period=2.0 * np.pi)
+        deviation = np.matmul(z_rot.T,z_rot)/len(z_rot)
+        side_dist = trajectory[0,-1] - original_pos[0]
+        forward_dist = trajectory[1,-1] - original_pos[1]
+        fitness_val = (-side_dist - deviation - np.abs(forward_dist))*100
+    elif type == "jump":
+        fitness_val = np.max(trajectory[2, :])*60*100
     return fitness_val / 60
 
 

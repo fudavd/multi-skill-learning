@@ -60,6 +60,7 @@ class CPG_network():
         self.A = matrix
         self._update_weight_map()
         self.weights = self.A[self.weight_map]
+        self.n_weights = len(self.weights)
 
     def update_CPG(self):
         y_t = RK45(self.y[:, -1], self.A, self.dt).reshape(self.state_shape)
@@ -68,3 +69,6 @@ class CPG_network():
 
     def _update_weight_map(self):
         self.weight_map = np.nonzero(np.triu(self.A))
+
+    def set_bias(self, bias):
+        self.initial_state = np.array(bias).reshape(self.state_shape)

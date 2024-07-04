@@ -4,7 +4,7 @@ Isaac Gym: Weight Optimisation (WO)
 
 How to use:
     From the root directory you can run from terminal
-    python ./exp_sim/SIM_WO.py --robot <robot name>
+    python ./exp_sim/WO.py --robot <robot name>
 """
 from numpy.random import default_rng
 

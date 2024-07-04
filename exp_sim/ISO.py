@@ -4,7 +4,7 @@ Isaac Gym: Initial State Optimisation (ISO)
 
 How to use:
     From the root directory you can run from terminal
-    python ./exp_sim/SIM_WO.py --robot <robot name>
+    python ./exp_sim/SIM_ISO.py --robot <robot name>
 """
 from numpy.random import default_rng
 
@@ -18,7 +18,7 @@ import os
 import tempfile
 from pyrr import Quaternion, Vector3
 
-from sim_utils import set_controller, save_states, update_robots, fitness
+from exp_sim.sim_utils import set_controller, save_states, update_robots, fitness
 from utils.Learners import RandomSampling
 from thirdparty.revolve2.standard_resources.revolve2.standard_resources import modular_robots
 from revolve2.core.modular_robot import ModularRobot
@@ -37,7 +37,7 @@ learner_params = {'evaluate_objective_type': 'full', 'max_gen': 1, 'pop_size': 1
 configuration_file: Dict = {
     'n_reps': 30,
     'skills': ["gait", "rot_l", "rot_r"],
-    'results_dir': './results/SIM/WO',
+    'results_dir': './results/SIM/ISO',
     'robot': 'spider',
     'controller_update_time': 1 / 10,
     'trial_time': 120,
@@ -54,26 +54,27 @@ def simulate_robot(params, args):
     params_learner = params['learner_params']
     window_time = params_learner['window_time']
     assert params['learner_params'] is not None, "Expected RevDE configuration"
+    start = time.time()
 
-    def parse_trial(state_buffer_eps, window, controller_states, num_skills):
-        rewards = np.empty((0, num_skills))
+    def parse_trial(state_buffer_eps, window, controller_states, skills):
+        rewards = np.empty((0, len(skills)))
         n_start = 0
         for n_start in range(1, state_buffer_eps.shape[1] - window):
             trajectory = state_buffer_eps[:, n_start:n_start + window]
-            fitness_rotl = fitness(trajectory, "rot_l")
-            fitness_rotr = fitness(trajectory, "rot_r")
-            gait = fitness(trajectory, "gait")
-            rewards = np.vstack((rewards, [gait, fitness_rotl, fitness_rotr]))
+            fitnesses = []
+            for skill in skills:
+                fitnesses.append(fitness(trajectory, skill))
+            rewards = np.vstack((rewards, fitnesses))
         return controller_states[1:n_start + window + 1, :], np.unwrap(rewards, axis=0)
 
-    def update_learner(learner, state_buffer, controllers_buffer, genomes, fitnesses, full_rewards, full_states, window_time):
+    def update_learner(learner, state_buffer, controllers_buffer, genomes, fitnesses, full_rewards, full_states, window_time, skills):
         window_size = int(window_time / controller_update_time)
-        total_max = np.array([-np.inf] * 3)
+        total_max = np.array([-np.inf] * num_skills)
         fitness_vec = []
         mean_f = 0
         for i in range(len(learner.x_new)):
             controller_buffer = np.array(controllers_buffer[i])
-            states, rewards = parse_trial(state_buffer[i, :, :], window_size, controller_buffer, num_skills)
+            states, rewards = parse_trial(state_buffer[i, :, :], window_size, controller_buffer, skills)
             full_states = np.vstack((full_states, states[:-window_size, :]))
             full_rewards = np.vstack((full_rewards, rewards[:, :]))
 
@@ -218,8 +219,10 @@ def simulate_robot(params, args):
 
     start_rep = time.time()
     rep_count = 0
+    rep = 0
     num_skills = len(skills)
-    for rep in range(n_reps):
+    # for rep in range(n_reps):
+    while rep < n_reps:
         finished = num_skills
         for ind, skill in enumerate(skills):
             learner_dir = f"./{results_dir}/{robot_name}/{skill}/{robot_name}{rep}"
@@ -227,11 +230,13 @@ def simulate_robot(params, args):
                 print(f'Already learned {robot_name}{rep}: exp = {skill}')
                 finished -= 1
                 continue
+
             if not os.path.exists(learner_dir):
                 os.makedirs(learner_dir)
         if finished == 0:
             print(f'Already learned {robot_name}{rep}: exp = {skills}')
-            break
+            rep+=1
+            continue
 
         _, controller = robot.make_actor_and_controller()
         rep_count += 1
@@ -262,7 +267,8 @@ def simulate_robot(params, args):
                 if round(t, 2) % trial_time == 0.0 and not start:
                     genomes, fitnesses, full_rewards, full_states = update_learner(learner, state_buffer, controllers_buffer,
                                                                                    genomes, fitnesses,
-                                                                                   full_rewards, full_states, window_time)
+                                                                                   full_rewards, full_states, window_time,
+                                                                                   skills)
                     for ind in range(len(learner.f)):
                         genome = learner.x_new[ind, :]
                         new_controller = set_controller(robot, genome, network_struct, learner_params['genome_type'])
@@ -292,19 +298,23 @@ def simulate_robot(params, args):
         best_fitness = np.diagonal(full_rewards[best_ind])
         best_genomes = full_states[best_ind]
         print(best_fitness)
+        if np.min(best_fitness) < 0 :
+            continue
+
         for ind, skill in enumerate(skills):
             learner_dir = f"./{results_dir}/{robot_name}/{skill}/{robot_name}{rep}"
             if not os.path.exists(learner_dir):
                 os.makedirs(learner_dir)
-            if os.path.isfile(f'{learner_dir}/fitnesses.npy'):
-                print(f'Already learned {robot_name}{rep}: exp = {skill}')
-                continue
+            # if os.path.isfile(f'{learner_dir}/fitnesses.npy'):
+            #     print(f'Already learned {robot_name}{rep}: exp = {skill}')
+            #     continue
 
             np.save(f'{learner_dir}/genomes.npy', full_states[:, ind])
             np.save(f'{learner_dir}/fitnesses.npy', full_rewards[:, ind])
             np.save(f'{learner_dir}/f_best.npy', best_fitness[ind])
             np.save(f'{learner_dir}/x_best.npy', best_genomes[ind, :])
             np.save(f'{learner_dir}/weights.npy', controller._weight_matrix)
+        rep += 1
 
     print(
         f'Learned {robot_name}, {skills.__iter__()} for {rep_count} repetitions: avg {(time.time() - start_rep) / 60 / max(1, rep_count)}min')
