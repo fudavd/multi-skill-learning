@@ -201,6 +201,7 @@
                     <ul class="sub-menu">
                       <li><a href="#B&P">Bootstrapping and Parallelization</a></li>
                     </ul>
+                <li><a href="#Pre">Target Following Task</a></li>
             </ul>
             </div>
             </div>
@@ -250,7 +251,7 @@
           <img src="media/Logo_VU.png" width="100%" alt="VU logo" style="padding: 10px; max-width: 300px"></a>
         </div>
         <hr>
-        <ul style="list-style-type: none; padding: 10px;overflow-y: auto;">
+        < style="list-style-type: none; padding: 10px;overflow-y: auto;">
 <!--          <li><a href="#Abstract">Abstract</a></li>-->
 <!--          <li><a href="#Task">Task Description</a></li>-->
           <li><a href="#Methodology">How it works</a></li>
@@ -263,7 +264,7 @@
                 <ul class="sub-menu">
                   <li><a href="#B&P">Bootstrapping and Parallelization</a></li>
                 </ul>
-<!--          <li><a href="#Results">Results</a></li>-->
+          <li><a href="#Pre">Target Following Task</a></li>
         </ul>
     </div>
 
@@ -272,7 +273,7 @@
         <hr>
           <div class="page-header">
             <div>
-              <h1 style="text-align: center; font-size: 56px;">A model-free method to learn multiple skills in modular robots</h1>
+              <h1 style="text-align: center; font-size: 56px;">A model-free method to learn multiple skills in parallel on modular robots</h1>
             </div>
           </div>
         <hr><br>
@@ -282,25 +283,25 @@
           <dt>
           <div class="date">
             <div class="month" style="color: #8c8484"><a href="https://orcid.org/0000-0002-7972-1649" target="_blank" style="color: #8c8484">Fuda van Diggelen</a></div>
-            <div class="year" style="color: #8c8484"><a href="https://cs.vu.nl/ci/" target="_blank" style="color: #8c8484">VU Amsterdam</a></div>
+            <div class="year" style="color: #8c8484"><a href="https://cs.vu.nl/ci/index.php/fuda-van-diggelen/" target="_blank" style="color: #8c8484">VU Amsterdam</a></div>
           </div>
           </dt>
           <dt>
           <div class="date">
             <div class="month" style="color: #8c8484"><a href="https://orcid.org/0000-0002-1165-286X" target="_blank" style="color: #8c8484">Nicolas Cambier</a></div>
-            <div class="year" style="color: #8c8484"><a href="https://cs.vu.nl/ci/" target="_blank" style="color: #8c8484">VU Amsterdam</a></div>
+            <div class="year" style="color: #8c8484"><a href="https://cs.vu.nl/ci/index.php/nicolas-cambier/" target="_blank" style="color: #8c8484">VU Amsterdam</a></div>
           </div>
           </dt>
           <dt>
           <div class="date">
             <div class="month" style="color: #8c8484"><a href="https://orcid.org/0000-0002-2213-8356" target="_blank" style="color: #8c8484">Eliseo Ferrante</a></div>
-            <div class="year" style="color: #8c8484"><a href="https://www.tii.ae/" target="_blank" style="color: #8c8484">TII</a></div>
+            <div class="year" style="color: #8c8484"><a href="https://cs.vu.nl/ci/index.php/dr-eliseo-ferrante/" target="_blank" style="color: #8c8484">VU Amsterdam</a></div>
           </div>
           </dt>
           <dt>
           <div class="date">
             <div class="month" style="color: #8c8484"><a href="https://orcid.org/0000-0002-3106-4213" target="_blank" style="color: #8c8484">A.E. Eiben</a></div>
-            <div class="year" style="color: #8c8484"><a href="https://cs.vu.nl/ci/" target="_blank" style="color: #8c8484">VU Amsterdam</a></div>
+            <div class="year" style="color: #8c8484"><a href="https://cs.vu.nl/ci/index.php/prof-dr-guszti-eiben/" target="_blank" style="color: #8c8484">VU Amsterdam</a></div>
           </div>
           </dt>
         </dl>
@@ -308,7 +309,7 @@
           <dd style="margin-left: auto">
           <div class="date">
             <div class="month" style="color: #8c8484">UNDER REVIEW</div>
-            <div class="year" style="color: #8c8484">2023</div>
+            <div class="year" style="color: #8c8484">2024</div>
           </div>
           </dd>
           <dd style="border-left: 1px solid; color: #8c8484; padding-left: 1%;">
@@ -363,9 +364,10 @@
 <!--          <h2 id="Tasks">Task description</h2><hr>-->
           <p style="font-size: 16px;">
             Locomotion is a pre-requisite for complex behaviour in mobile robots (like foraging, and scanning the environment).
-            Being able to learn locomotion skills quickly, is therefore a must when we deploy robots in unseen environments where we lack a model of the world, i.e. a model-free approach.
-            In this work, 6 modular robots of various design are tasked to learn three locomotion skills from scratch with a training budget of 15 minutes in the real world.
-            The skills are defined as follows:
+              Being able to learn locomotion skills quickly is therefore a must when we deploy robots in unseen environments.
+              Especially, when we lack a proper model of the world, i.e. a model-free approach.
+              In this work, 6 modular robots of various design are tasked to learn three locomotion skills from scratch with a training budget of 15 minutes in the real world.
+              The skills are defined as follows:
           </p>
           <ul>
             <li style="text-align: justify; font-size: 16px; margin-left: 2%;  margin-bottom: 10px;">
@@ -547,7 +549,7 @@
             <h3 id="ISO" >Initial State Optimisation</h3><hr>
             <p style="text-align: justify; font-size: 16px; text-indent: 4%">
               WO changes network dynamics (i.e. the vector field in state-space) which in return re-defines the behaviour of the CPGs.
-              ISO keeps the network dynamics the same, meaning we freeze the weights of the CPGs and optimises the initial start in state-space.
+              ISO keeps the network dynamics the same and 'selects' the proper behaviour through its initial position. Meaning we freeze the weights of the CPGs and optimises the initial start in state-space.
               Thus, in ISO the vector field remains the same, but we search for optimal CPG behaviour by testing different initial states.
               We like to view this as the CPG-network containing a 'reservoir' of (good) behaviours (encoded by its weights) and our initial state providing an 'input signal' to our network to select one of these behaviours.
             </p>
@@ -616,7 +618,7 @@
 
           <div style="text-align: center; margin-bottom: 40px;">
             <p style="text-align: justify; font-size: 16px; text-indent: 4%;  margin-bottom: 30px;">
-              A trade-off can be made between testing longer to obtain more bootstrapped samples, or sampling different regions in state spce with another trial.
+              A trade-off can be made between testing longer to obtain more bootstrapped samples, or sampling different regions in state space with more trials (see Appendix for hyper-parameter sweep of ISO).
               In our work, we choose to test 5 different regions for two minutes each (10 minutes in total) using random search.
               In the end, we select the best overall (intermediate) initial state sample for each skill (denoted as [\(s^*_{⟲}\), \(s^*_{→}\), \(s^*_{⟳}\)]).
             </p>
@@ -650,33 +652,21 @@
           </div>
           </div>
 
-
-
-
-<!--          <div style="text-align: center;">-->
-<!--            <h2>Robustness to Perturbations</h2>-->
-<!--            <br>-->
-<!--            <div class="videoWrapper">-->
-<!--              <iframe width="2560" height="1135"-->
-<!--                src="https://www.youtube.com/embed/GTdtq7nhXZ0" title="ASC: Robustness to Perturbations" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>-->
-<!--              </iframe>-->
-<!--            </div>-->
-<!--          </div>-->
-
-
-<!--          <br><hr><br>-->
-
-
-<!--          <div style="text-align: center;">-->
-<!--            <h2>Learned skills vs. Boston Dynamics API</h2>-->
-<!--            <br>-->
-<!--            <div class="videoWrapper">-->
-<!--              <iframe width="2560" height="1135"-->
-<!--                src="https://www.youtube.com/embed/-8E4WhdneS8" title="ASC: Learned skills vs. Boston Dynamics API" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>-->
-<!--              </iframe>-->
-<!--            </div>-->
-<!--          </div>-->
-
+        <div style="margin-top: 40px; margin-bottom: 20px;">
+            <h3 id="Pre" >Target Following</h3><hr>
+            <p style="text-align: justify; font-size: 16px; text-indent: 4%">
+              We consider our CPG-network as a reservoir that encodes many behaviours, which we can learn through ISO.
+                The resulting repertoire of motor skills can be used for more complex tasks.
+                We provide a feedback signal to our CPG-controller to smoothly switch between skills (see paper for more detail).
+                Using, our learned skills (→,⟳,⟲) we are able to succesfully complete a random target following task.
+            </p>
+        </div>
+          <div>
+              <br>
+              <video playsinline autoplay muted loop style="width: 100%; border: 0px solid transparent">
+                <source src="media/feedback.mp4" type="video/mp4"></source>
+              </video>
+          </div>
           <div class="col-md-1"></div>
       </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
