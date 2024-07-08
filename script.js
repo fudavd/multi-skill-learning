@@ -3,7 +3,7 @@ window.addEventListener("resize", function() {
 });
 
 function togglePageOverview() {
-  var pageOverview = document.querySelector(".page-overview");
+  var pageOverview = document.querySelector(".pageOverview");
   var desktopMenu = document.querySelector(".desktop-menu");
   var mobileMenu = document.querySelector(".mobile-menu");
   var contentElement = document.getElementById("subheader");
