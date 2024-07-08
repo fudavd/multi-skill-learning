@@ -4,7 +4,7 @@ window.addEventListener("resize", function() {
 
 function togglePageOverview() {
   var pageOverview = document.querySelector(".page-overview");
-  // var desktopMenu = document.querySelector(".desktop-menu");
+  var desktopMenu = document.querySelector(".desktop-menu");
   var mobileMenu = document.querySelector(".mobile-menu");
   var contentElement = document.getElementById("subheader");
 
@@ -12,7 +12,7 @@ function togglePageOverview() {
     var desktopContent = document.getElementById("desktop-content");
     desktopContent.style.display = "flex";
     pageOverview.style.display = "block";
-    // desktopMenu.style.display = "block";
+    desktopMenu.style.display = "block";
     mobileMenu.style.display = "none";
 
     } else {
@@ -20,7 +20,7 @@ function togglePageOverview() {
     desktopContent.style.display = "none";
 
     pageOverview.style.display = "none";
-    // desktopMenu.style.display = "none";
+    desktopMenu.style.display = "none";
 
     mobileMenu.style.display = "block";
   }
