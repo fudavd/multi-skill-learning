@@ -413,7 +413,7 @@
         </div>
 
         <div style="text-align: justify; margin-bottom: 20px;">
-          <h2 id="Methodology">How it works</h2><hr>
+          <hr><h2 id="Methodology">How it works</h2><hr>
           <p style="font-size: 16px; text-indent: 4%">
             CPGs are pairs of artificial neurons that reciprocally inhibit and excite each other to produce oscillatory behaviour, and can be described mathematically as a set of Ordinary Differential Equations as shown below.
             Originally, CPGs were used to describe the behaviour of groups of neuron responsible for generating locomotion patterns found in the spinal cords of several animals.
@@ -465,7 +465,7 @@
           </p>
         </div>
         <div style="margin-bottom: 20px; margin-top: 40px;">
-            <h3 id="Space state" >State-space</h3><hr>
+            <hr><h3 id="Space state" >State-space</h3><hr>
             <p style="text-align: justify; font-size: 16px; text-indent: 4%">
               If we look at the state-value of each neuron in our CPG-network, as time progresses, we can find (semi-)cyclical pattens emerge.
               Below, we map the state-value of two neurons on a 2D-plane to show the behaviour of the CPGs in their so-called 'state-space' (i.e. the bottom right plot).
@@ -546,7 +546,7 @@
           </div>
 
           <div style="margin-top: 40px; margin-bottom: 20px;">
-            <h3 id="ISO" >Initial State Optimisation</h3><hr>
+            <hr><h3 id="ISO" >Initial State Optimisation</h3><hr>
             <p style="text-align: justify; font-size: 16px; text-indent: 4%">
               WO changes network dynamics (i.e. the vector field in state-space) which in return re-defines the behaviour of the CPGs.
               ISO keeps the network dynamics the same and 'selects' the proper behaviour through its initial position. Meaning we freeze the weights of the CPGs and optimises the initial start in state-space.
@@ -588,7 +588,7 @@
             <img src="media/record_robot.svg" alt="record_robot" style="margin-left: 3%; margin-right: 3%; width: 40%; margin-top: -2%;">
           </div>
           <div style="margin-top: 40px; margin-bottom: 20px">
-            <h3 id="B&P" >Bootstrapping and Parallelization</h3><hr>
+            <hr><h3 id="B&P" >Bootstrapping and Parallelization</h3><hr>
             <p style="text-align: justify; font-size: 16px; text-indent: 4%;  margin-bottom: 10px;">
               ISO optimisation approaches the CPG-network as a reservoir of behaviours encoded by frozen weights.
               This means that optimisation <span style="text-decoration: underline;">does not affect</span> the network dynamics (the vector field remains the same).
@@ -653,7 +653,7 @@
           </div>
 
         <div style="margin-top: 40px; margin-bottom: 20px;">
-            <h3 id="Pre" >Target Following</h3><hr>
+            <hr><h2 id="Pre" >Target Following</h2><hr>
             <p style="text-align: justify; font-size: 16px; text-indent: 4%">
               We consider our CPG-network as a reservoir that encodes many behaviours, which we can learn through ISO.
                 The resulting repertoire of motor skills can be used for more complex tasks.
