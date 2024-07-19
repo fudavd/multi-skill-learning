@@ -445,7 +445,7 @@
           \)
         </div>
         <div style="text-align: justify; margin-bottom: 50px; display: flex; align-items: center; justify-content: center;">
-          <p style="font-size: 16px; text-indent: 4%">
+          <p style="font-size: 16px;">
             We create a network of CPGs by coupling several oscillators with each other, based on the morphological design of a modular robot (depicted below as a blueprint).
             Here, each servomotor gets assigned a single CPG-oscillator that is subsequently linked to its neighbours, according to their modular-based distance as shown below.
             The final CPG-network is able to produce more complex signals which are correlated with neighbouring oscillators.
@@ -457,7 +457,7 @@
             <img src="media/gecko_blueprint.png" width="20%" alt="gecko blueprint" style="margin-left: 3%; margin-right: 3%;">
             <img src="media/gecko_blueprint_cpg2.png" width="22.5%" alt="gecko blueprint cpg" style="margin-left: 3%;"><br>
             <img src="media/CPG-network_clean.svg" width="30%" alt="cpg network" style="margin-bottom: 40px;">
-          <p style="text-align: justify; font-size: 16px; text-indent: 4%; margin-bottom: 40px;">
+          <p style="text-align: justify; font-size: 16px; margin-bottom: 40px;">
             Although some details may vary, our work shows that in essence the oscillatory behaviour within the CPG-network is invariably defined in terms of the connectivity between neurons and their initial state.
             As a result we can identify two modes of optimisation: 1) Weight optimisation (WO), which is a standard way of optimizing CPGs; and 2) Initial State optimisation (ISO), which (to our knowledge) has never been investigated.
             Our paper provides a thorough insight to the difference between WO and ISO and their mathematical properties.
@@ -491,7 +491,7 @@
           </div>
           <br>
 
-          <p style="text-align: justify; font-size: 16px; text-indent: 4%">
+          <p style="text-align: justify; font-size: 16px;">
             The state-space trajectory is defined by the local derivatives of our CPG-network at any point in state-space.
             We can show this as a vector field in state-space, where each vector indicates the local derivative at the corresponding point in state-space.
             Now recall that the dynamics of the CPGs are solely defined by the weights in the network.
@@ -576,7 +576,7 @@
             </figure>
           </div>
           <div style="text-align: center;">
-            <p style="text-align: justify; font-size: 16px; text-indent: 4%;  margin-bottom: 30px;">
+            <p style="text-align: justify; font-size: 16px; margin-bottom: 30px;">
               Now we load our CPG-network on the real robot, where we test our sampled initial state.
               During a single trial, we save the intermediate states of the network (\(\mathcal{S}\)).
               In addition, an overhead system tracks the movement of our robot in the real world to collect position and orientation data (\(\mathcal{D}\)).
@@ -617,7 +617,7 @@
           </div>
 
           <div style="text-align: center; margin-bottom: 40px;">
-            <p style="text-align: justify; font-size: 16px; text-indent: 4%;  margin-bottom: 30px;">
+            <p style="text-align: justify; font-size: 16px; margin-bottom: 30px;">
               A trade-off can be made between testing longer to obtain more bootstrapped samples, or sampling different regions in state space with more trials (see Appendix for hyper-parameter sweep of ISO).
               In our work, we choose to test 5 different regions for two minutes each (10 minutes in total) using random search.
               In the end, we select the best overall (intermediate) initial state sample for each skill (denoted as [\(s^*_{⟲}\), \(s^*_{→}\), \(s^*_{⟳}\)]).
@@ -633,7 +633,7 @@
 
           <div style="text-align: justify; margin-bottom: 20px; margin-top: 40px">
 <!--            <h2 id="Results">Results</h2>-->
-            <p style="font-size: 16px; text-indent: 4%">
+            <p style="font-size: 16px;">
               In the end, we re-test our best initial states [\(s^*_{⟲}\), \(s^*_{→}\), \(s^*_{⟳}\)] to measure the performance of our ISO algorithm's final skills. The resulting behaviours are shown below.
             </p>
             <div style="text-align: center; display: flex; justify-content: center; align-items: center;">
@@ -654,7 +654,7 @@
 
         <div style="margin-top: 40px; margin-bottom: 20px;">
             <hr><h2 id="Pre" >Target Following</h2><hr>
-            <p style="text-align: justify; font-size: 16px; text-indent: 4%">
+            <p style="text-align: justify; font-size: 16px;">
               We consider our CPG-network as a reservoir that encodes many behaviours, which we can learn through ISO.
                 The resulting repertoire of motor skills can be used for more complex tasks.
                 We provide a feedback signal to our CPG-controller to smoothly switch between skills (see paper for more detail).
