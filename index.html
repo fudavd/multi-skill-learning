@@ -363,9 +363,14 @@
           <p style="font-size: 16px;">
             Locomotion is a pre-requisite for complex behaviour in mobile robots (like foraging, and scanning the environment).
               Being able to learn locomotion skills quickly is therefore a must when we deploy robots in unseen environments.
-              Especially, when we lack a proper model of the world, i.e. a model-free approach.
-              In this work, 6 modular robots of various design are tasked to learn three locomotion skills from scratch with a training budget of 15 minutes in the real world.
-              The skills are defined as follows:
+              When we lack a proper model of the world and of the robot, we need a model-free approach.
+              In nature, many newborn animals can walk within minutes of birth.
+              Central Pattern Generating neural networks (CPGs) can coordinate movement effectively without the need for extensive learning and neural adaptation.
+              These neural centres, located in the spinal cord, can encode different behaviours that are started when higher level commands from the brain initialize the corresponding neurons. &nbsp;
+              Drawing inspiration from this phenomenon, we propose a novel method that enables robots to learn locomotion in just 15 minutes.
+          </p><p style="font-size: 16px;">
+            In this work, 6 modular robots of various design are tasked to learn three locomotion skills from scratch with a training budget of 15 minutes in the real world.
+            The skills are defined as follows:
           </p>
           <ul>
             <li style="text-align: justify; font-size: 16px; margin-left: 2%;  margin-bottom: 10px;">
@@ -664,6 +669,14 @@
                 <source src="media/feedback.mp4" type="video/mp4"></source>
               </video>
             </div>
+        </div>
+
+        <div style="margin-top: 40px; margin-bottom: 10px;">
+            <h2 id="Conclusion">To conclude</h2><hr/>
+        <p style="text-align: justify; font-size: 16px;">
+            Learning multiple movement skills is an important challenge for legged robotics insofar as it is a prerequisite for viable complex behaviour.
+            In this paper, we show that learning can be extremely fast when considering our CPG-network as a reservoir of behaviour from which we can 'select' optimal patterns for several skills.
+            Future work will explore how optimisations methods need to look like from this new search paradigm, and we will further investigate the use of <em>bootstrapping</em> and <em>parallelisation</em>, leading to a more complex skill learning framework that overall could be applied also to robot in other domains (e.g. soft robots or underwater applications).</p>
         </div>
 
           <div class="col-md-1"></div>
